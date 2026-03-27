@@ -293,13 +293,6 @@
 "admin.lessons.form.order" = "Lesson order";
 "admin.lessons.form.duration" = "Duration MM:SS";
 "admin.lessons.form.pickImage" = "Image from library";
-"admin.lessons.form.autofillYoutube" = "Autofill video by title";
-"admin.lessons.form.searchYoutube" = "Search YouTube by title";
-"admin.lessons.bulkAutofill" = "Fill videos";
-"admin.lessons.bulkAutofill.title" = "Autofill videos by title";
-"admin.lessons.bulkAutofill.message" = "The app will suggest and rewrite YouTube links for every lesson in %@ based on each lesson title.";
-"admin.lessons.bulkAutofill.confirm" = "Fill now";
-"admin.lessons.bulkAutofill.success" = "Updated lesson video links for this course based on lesson titles.";
 "admin.lessons.versioned.success" = "This course already has students who finished it, so the app created a new version before adding the lesson to protect old certificates.";
 "admin.lessons.validation.title" = "Lesson title cannot be empty.";
 "admin.lessons.validation.order" = "Lesson order must be a number greater than 0.";

@@ -18,14 +18,6 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addLessonTapped))
     }()
-    private lazy var autofillBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(
-            title: L10n.tr("admin.lessons.bulkAutofill"),
-            style: .plain,
-            target: self,
-            action: #selector(bulkAutofillYouTubeLinks)
-        )
-    }()
 
     @IBOutlet private weak var headerCardView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -50,7 +42,7 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
     override func buildContent() {
         title = L10n.tr("admin.lessons.title")
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItems = [addBarButtonItem, autofillBarButtonItem]
+        navigationItem.rightBarButtonItem = addBarButtonItem
 
         headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
         listCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
@@ -151,20 +143,6 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
             let currentDraft = self.makeLessonDraft(from: alert)
             self.pickThumbnailForLesson(lesson: lesson, draft: currentDraft)
         })
-        alert.addAction(UIAlertAction(title: L10n.tr("admin.lessons.form.autofillYoutube"), style: .default) { [weak self, weak alert] _ in
-            guard let self, let alert else { return }
-            var currentDraft = self.makeLessonDraft(from: alert)
-            currentDraft.videoURL = LessonVideoSuggestionProvider.autofillURL(
-                for: currentDraft.title,
-                courseTitle: self.course?.displayTitle
-            )
-            self.presentLessonForm(lesson: lesson, draft: currentDraft)
-        })
-        alert.addAction(UIAlertAction(title: L10n.tr("admin.lessons.form.searchYoutube"), style: .default) { [weak self, weak alert] _ in
-            guard let self, let alert else { return }
-            let currentDraft = self.makeLessonDraft(from: alert)
-            self.searchYouTubeForLessonTitle(lesson: lesson, draft: currentDraft)
-        })
         alert.addAction(UIAlertAction(title: L10n.tr("common.cancel"), style: .cancel))
         alert.addAction(UIAlertAction(title: L10n.tr("common.save"), style: .default) { [weak self] _ in
             guard let self, let course = self.course else { return }
@@ -238,56 +216,6 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
                     }
                 }
             )
-        }
-    }
-
-    private func searchYouTubeForLessonTitle(lesson: Lesson?, draft: LessonFormDraft) {
-        let query = draft.title.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else {
-            showError(message: L10n.tr("admin.lessons.validation.title")) { [weak self] in
-                self?.presentLessonForm(lesson: lesson, draft: draft)
-            }
-            return
-        }
-
-        let searchURL = LessonVideoSuggestionProvider.searchURL(for: query, courseTitle: course?.displayTitle)
-        if let url = URL(string: searchURL) {
-            UIApplication.shared.open(url)
-        }
-
-        presentLessonForm(lesson: lesson, draft: draft)
-    }
-
-    @objc private func bulkAutofillYouTubeLinks() {
-        guard let course, !lessons.isEmpty else { return }
-        showConfirm(
-            title: L10n.tr("admin.lessons.bulkAutofill.title"),
-            message: L10n.tr("admin.lessons.bulkAutofill.message", course.displayTitle),
-            confirmTitle: L10n.tr("admin.lessons.bulkAutofill.confirm")
-        ) { [weak self] in
-            guard let self else { return }
-            Task { @MainActor in
-                do {
-                    for lesson in self.lessons {
-                        let suggestedURL = LessonVideoSuggestionProvider.autofillURL(
-                            for: lesson.title,
-                            courseTitle: course.displayTitle
-                        )
-                        _ = try await LessonService.shared.update(id: lesson.id, data: [
-                            "course_id": lesson.course_id,
-                            "title": lesson.title,
-                            "thumbnail_url": lesson.thumbnail_url ?? "",
-                            "video_url": suggestedURL,
-                            "lesson_order": String(lesson.lesson_order),
-                            "duration": lesson.duration ?? "00:00"
-                        ])
-                    }
-                    await self.loadLessons()
-                    self.showSuccess(message: L10n.tr("admin.lessons.bulkAutofill.success"))
-                } catch {
-                    self.showError(message: error.localizedDescription)
-                }
-            }
         }
     }
 

@@ -105,7 +105,7 @@ struct MonthlyReport: Codable, Equatable {
 
 final class DemoDataStore {
     static let shared = DemoDataStore()
-    private static let currentCatalogVersion = 14
+    private static let currentCatalogVersion = 16
 
     // Legacy defaults are only kept to migrate older builds.
     // The active source of truth is now the Core Data-backed payload below.
@@ -438,7 +438,7 @@ final class DemoDataStore {
                 slug: slug,
                 title: title,
                 description: description,
-                thumbnail: "https://picsum.photos/seed/\(thumbnailSeed)/1200/700",
+                thumbnail: "bundle://\(thumbnailSeed)",
                 instructor_name: instructorName,
                 instructor_email: instructorEmail,
                 category_id: categoryID,
@@ -469,7 +469,7 @@ final class DemoDataStore {
                 id: id,
                 course_id: courseID,
                 title: title,
-                thumbnail_url: "https://picsum.photos/seed/\(imageSeed)/900/506",
+                thumbnail_url: "bundle://\(imageSeed)",
                 video_url: LessonVideoSuggestionProvider.suggestedURL(for: title, fallback: videoURL),
                 lesson_order: order,
                 duration: duration

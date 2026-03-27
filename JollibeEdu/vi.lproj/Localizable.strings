@@ -293,13 +293,6 @@
 "admin.lessons.form.order" = "Thứ tự bài học";
 "admin.lessons.form.duration" = "Thời lượng MM:SS";
 "admin.lessons.form.pickImage" = "Ảnh từ bộ sưu tập";
-"admin.lessons.form.autofillYoutube" = "Tự điền video theo title";
-"admin.lessons.form.searchYoutube" = "Tìm YouTube theo tiêu đề";
-"admin.lessons.bulkAutofill" = "Fill video";
-"admin.lessons.bulkAutofill.title" = "Tự điền video theo title";
-"admin.lessons.bulkAutofill.message" = "App sẽ gợi ý và điền lại link YouTube cho toàn bộ lesson của khóa %@ dựa trên title hiện tại.";
-"admin.lessons.bulkAutofill.confirm" = "Điền ngay";
-"admin.lessons.bulkAutofill.success" = "Đã cập nhật link video theo title cho toàn bộ lesson của khóa học.";
 "admin.lessons.versioned.success" = "Khóa học này đã có học viên hoàn thành, nên app vừa tạo version mới để thêm lesson mà không ảnh hưởng certificate cũ.";
 "admin.lessons.validation.title" = "Tiêu đề bài học không được để trống.";
 "admin.lessons.validation.order" = "Thứ tự bài học phải là số lớn hơn 0.";
