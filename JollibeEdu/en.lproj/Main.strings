@@ -1,0 +1,49 @@
+"gh-hero-title.text" = "Learn with structure, track progress, and reach your completion certificate.";
+"gh-hero-sub.text" = "Explore featured courses, find the right instructor, and start the guest browsing flow on mobile.";
+"gh-feature-title.text" = "Why learn with JolibeeEdu";
+"gh-feature-sub.text" = "Four highlights help learners choose courses, track progress, and finish their goals.";
+"gh-popular-title.text" = "Featured Courses";
+"gh-popular-sub.text" = "Popular courses are shown as horizontal cards so guest users can browse and jump into course details quickly.";
+"gh-popular-placeholder.text" = "Loading featured courses...";
+"gh-browse-btn.normalTitle" = "Browse Courses";
+"gh-secondary-btn.normalTitle" = "Register Now";
+
+"li-hero-title.text" = "Sign in to continue learning";
+"li-hero-sub.text" = "Access your courses, progress, and admin area from one clean, friendly JolibeeEdu interface.";
+"li-email.placeholder" = "Username or email";
+"li-password.placeholder" = "Password";
+"li-remember-label.text" = "Remember my sign-in";
+"li-error-label.text" = "Login error messages will appear here.";
+"li-login-btn.normalTitle" = "Login";
+"li-forgot-btn.normalTitle" = "Forgot password";
+"li-register-btn.normalTitle" = "Create new account";
+"li-footer.text" = "Demo accounts will appear here after the controller applies style.";
+
+"re-hero-title.text" = "Create a new learner account";
+"re-hero-sub.text" = "Fill in your full name, username, email, and password to start learning online with JolibeeEdu.";
+"re-full-name.placeholder" = "Full name";
+"re-username.placeholder" = "Username";
+"re-email.placeholder" = "Email";
+"re-password.placeholder" = "Password";
+"re-confirm-password.placeholder" = "Confirm password";
+"re-agreement-label.text" = "I agree with the learning terms";
+"re-error-label.text" = "Registration errors will appear here.";
+"re-register-btn.normalTitle" = "Create account";
+"re-login-btn.normalTitle" = "Already have an account? Sign in";
+
+"fp-intro-title.text" = "Recover your password in 2 steps";
+"fp-intro-sub.text" = "Verify the email first, then enter a new password on the same screen so you can return to learning quickly.";
+"fp-step-label.text" = "Step 1: Verify the email in the system.";
+"fp-email.placeholder" = "Enter registered email";
+"fp-status-label.text" = "Email verification status and guidance will appear here.";
+"fp-verify-btn.normalTitle" = "Check email";
+"fp-new-password.placeholder" = "New password";
+"fp-confirm-password.placeholder" = "Confirm new password";
+"fp-submit-btn.normalTitle" = "Reset password";
+
+"cl-header-title.text" = "Explore practical courses";
+"cl-header-sub.text" = "Filter by category, search quickly, and open course details to view pricing, instructor info, and lesson flow.";
+"cl-search.placeholder" = "Search courses, instructors, topics...";
+"cl-category-placeholder.text" = "Categories will appear here";
+"cl-empty-placeholder.text" = "The empty state appears when no course matches.";
+"cl-load-more.normalTitle" = "Load more";

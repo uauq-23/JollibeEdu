@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FA4441BC2F766A4800B46BD8 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = FA4441BB2F766A4800B46BD8 /* FirebaseCore */; };
+		FA4441BE2F766A4E00B46BD8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FA4441BD2F766A4E00B46BD8 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FA0C820F2F6D20F4001695F1 /* JollibeEdu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JollibeEdu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA4441BC2F766A4800B46BD8 /* FirebaseCore in Frameworks */,
+				FA4441BE2F766A4E00B46BD8 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0C82112F6D20F4001695F1 /* JollibeEdu */,
+				FA4441BA2F766A4800B46BD8 /* Frameworks */,
 				FA0C82102F6D20F4001695F1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +64,13 @@
 				FA0C820F2F6D20F4001695F1 /* JollibeEdu.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FA4441BA2F766A4800B46BD8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,6 +93,8 @@
 			);
 			name = JollibeEdu;
 			packageProductDependencies = (
+				FA4441BB2F766A4800B46BD8 /* FirebaseCore */,
+				FA4441BD2F766A4E00B46BD8 /* FirebaseFirestore */,
 			);
 			productName = JollibeEdu;
 			productReference = FA0C820F2F6D20F4001695F1 /* JollibeEdu.app */;
@@ -104,9 +121,13 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
 			);
 			mainGroup = FA0C82062F6D20F4001695F1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FA4441B92F76688A00B46BD8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FA0C82102F6D20F4001695F1 /* Products */;
 			projectDirPath = "";
@@ -333,6 +354,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FA4441B92F76688A00B46BD8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FA4441BB2F766A4800B46BD8 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA4441B92F76688A00B46BD8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		FA4441BD2F766A4E00B46BD8 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA4441B92F76688A00B46BD8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FA0C82072F6D20F4001695F1 /* Project object */;
 }

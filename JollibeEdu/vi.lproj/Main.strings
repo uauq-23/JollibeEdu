@@ -1,0 +1,49 @@
+"gh-hero-title.text" = "Học bài bản, theo dõi tiến độ và chạm chứng chỉ hoàn thành.";
+"gh-hero-sub.text" = "Khám phá khóa học nổi bật, tìm giảng viên phù hợp và bắt đầu ngay luồng guest browsing trên mobile.";
+"gh-feature-title.text" = "Lý do học cùng JolibeeEdu";
+"gh-feature-sub.text" = "4 điểm nổi bật giúp người học dễ chọn khóa học, theo dõi tiến độ và hoàn thành mục tiêu.";
+"gh-popular-title.text" = "Khóa học nổi bật";
+"gh-popular-sub.text" = "Các khóa học nổi bật được tải theo dạng thẻ ngang để người dùng khách dễ lướt và vào trang chi tiết.";
+"gh-popular-placeholder.text" = "Đang tải khóa học nổi bật...";
+"gh-browse-btn.normalTitle" = "Xem khóa học";
+"gh-secondary-btn.normalTitle" = "Đăng ký ngay";
+
+"li-hero-title.text" = "Đăng nhập để tiếp tục học tập";
+"li-hero-sub.text" = "Truy cập khoá học, tiến độ học tập và khu vực quản trị trên một giao diện gọn gàng, thân thiện và đúng chất JolibeeEdu.";
+"li-email.placeholder" = "Tên đăng nhập hoặc email";
+"li-password.placeholder" = "Mật khẩu";
+"li-remember-label.text" = "Ghi nhớ thông tin đăng nhập";
+"li-error-label.text" = "Thông báo lỗi đăng nhập hiển thị ở đây.";
+"li-login-btn.normalTitle" = "Đăng nhập";
+"li-forgot-btn.normalTitle" = "Quên mật khẩu";
+"li-register-btn.normalTitle" = "Tạo tài khoản mới";
+"li-footer.text" = "Demo account sẽ hiển thị ở đây sau khi controller áp dụng style.";
+
+"re-hero-title.text" = "Tạo tài khoản học viên mới";
+"re-hero-sub.text" = "Điền đầy đủ họ tên, tên đăng nhập, email và mật khẩu để bắt đầu hành trình học trực tuyến với nền tảng JolibeeEdu.";
+"re-full-name.placeholder" = "Họ và tên";
+"re-username.placeholder" = "Tên đăng nhập";
+"re-email.placeholder" = "Email";
+"re-password.placeholder" = "Mật khẩu";
+"re-confirm-password.placeholder" = "Xác nhận mật khẩu";
+"re-agreement-label.text" = "Tôi đồng ý với điều khoản học tập";
+"re-error-label.text" = "Thông báo lỗi đăng ký sẽ hiển thị ở đây.";
+"re-register-btn.normalTitle" = "Tạo tài khoản";
+"re-login-btn.normalTitle" = "Đã có tài khoản? Đăng nhập";
+
+"fp-intro-title.text" = "Khôi phục mật khẩu theo 2 bước";
+"fp-intro-sub.text" = "Xác minh email trước, sau đó nhập mật khẩu mới ngay trên cùng một màn hình để quay lại việc học thật nhanh.";
+"fp-step-label.text" = "Bước 1: Xác minh email trong hệ thống.";
+"fp-email.placeholder" = "Nhập email đăng ký";
+"fp-status-label.text" = "Trạng thái kiểm tra email và hướng dẫn sẽ hiển thị tại đây.";
+"fp-verify-btn.normalTitle" = "Kiểm tra email";
+"fp-new-password.placeholder" = "Mật khẩu mới";
+"fp-confirm-password.placeholder" = "Xác nhận mật khẩu mới";
+"fp-submit-btn.normalTitle" = "Đặt lại mật khẩu";
+
+"cl-header-title.text" = "Khám phá các khóa học thực chiến";
+"cl-header-sub.text" = "Lọc theo danh mục, tìm kiếm nhanh và mở trang chi tiết để xem pricing, instructor và lesson flow.";
+"cl-search.placeholder" = "Tìm kiếm khóa học, giảng viên, chủ đề...";
+"cl-category-placeholder.text" = "Danh mục sẽ hiển thị ở đây";
+"cl-empty-placeholder.text" = "Empty state sẽ hiện khi không có khóa học phù hợp";
+"cl-load-more.normalTitle" = "Tải thêm";

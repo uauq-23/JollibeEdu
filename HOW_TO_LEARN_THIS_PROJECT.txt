@@ -1,0 +1,177 @@
+CACH HOC CODE PROJECT NAY CHO DE HIEU
+==================================================
+
+1. DOC THEO THU TU NAY
+==================================================
+
+Neu ban doc dung thu tu, project se de hieu hon rat nhieu:
+
+Buoc 1:
+- JollibeEdu/Helpers/RootRouter.swift
+- JollibeEdu/Managers/SessionManager.swift
+
+De hieu:
+- app vao man nao khi mo len
+- login xong thi vao admin hay student
+
+Buoc 2:
+- JollibeEdu/Services/AuthService.swift
+- JollibeEdu/Services/CourseService.swift
+- JollibeEdu/Services/LessonService.swift
+- JollibeEdu/Services/ProgressService.swift
+
+De hieu:
+- Controller khong xu ly data truc tiep
+- Controller goi Service
+- Service moi di xu ly backend hoac local store
+
+Buoc 3:
+- JollibeEdu/Services/DemoDataStore.swift
+
+De hieu:
+- Neu khong co backend that thi du lieu lay o dau
+- enroll, progress, payment, report duoc tinh nhu the nao
+
+Buoc 4:
+- JollibeEdu/Managers/CoreDataManager.swift
+- JollibeEdu/Models/CoreDataEntities.swift
+- JollibeEdu/JollibeEduDataModel.xcdatamodeld
+
+De hieu:
+- du lieu local duoc luu nhu the nao
+- entity nao dang luu account, session, enrollment, progress
+
+Buoc 5:
+- JollibeEdu/Controllers/Public/*
+- JollibeEdu/Controllers/Student/*
+- JollibeEdu/Controllers/Admin/*
+
+De hieu:
+- UI cua tung role hoat dong ra sao
+
+
+2. NHIN PROJECT THEO 3 TANG
+==================================================
+
+Tang 1 - UI:
+- Storyboard
+- ViewController
+- Cell
+
+Tang 2 - Logic:
+- Service
+- RootRouter
+- SessionManager
+
+Tang 3 - Persistence:
+- DemoDataStore
+- CoreDataManager
+- Core Data Entities
+
+Chi can nho:
+- UI khong nen tu tinh toan qua nhieu
+- UI goi Service
+- Service lay data
+- Data can luu thi di qua Core Data
+
+
+3. TAI SAO VAN CO Models/User.swift, Course.swift, Lesson.swift
+==================================================
+
+Vi project dang tach 2 loai model:
+
+Loai 1 - Domain/API model:
+- User
+- Course
+- Lesson
+- Enrollment
+
+Loai nay dung cho:
+- Service
+- Controller
+- Codable
+- API
+
+Loai 2 - Core Data entity:
+- StoredAccount
+- StoredSession
+- StoredEnrollment
+- StoredProgress
+- StoredDemoState
+
+Loai nay dung cho:
+- luu local
+- Core Data
+
+Day la cach tach de hoc de hon:
+- model hien thi thi cu la Swift struct
+- model luu DB thi la Core Data entity
+
+
+4. FILE NAO KHONG NEN CO GANG XOA
+==================================================
+
+Ban thay cac file nhu:
+- UIButton+AppStyle
+- UITextField+AppStyle
+- UIView+CardStyle
+- UIViewController+Alerts
+- UIFactory
+
+Thi dung nghi day la code thua.
+
+No la helper de:
+- tranh lap lai code style
+- tranh viet cung 1 doan UI 20 lan
+- giup controller gon hon
+
+Neu xoa het helper nay:
+- moi man se phai viet lai style bang tay
+- code se dai va kho doc hon
+
+
+5. NEU MUON CODE GON DE HOC, NEN GIU NGUYEN TAC NAY
+==================================================
+
+- Moi controller chi nen lo UI va action cua man do
+- Moi service chi nen lo data cua 1 module
+- Moi helper chi lam 1 viec nho
+- Moi file khong nen vua lo UI vua lo DB vua lo API
+
+
+6. CACH HOC NHANH NHAT
+==================================================
+
+Ngay 1:
+- doc RootRouter
+- doc SessionManager
+- doc LoginViewController
+
+Ngay 2:
+- doc CourseService
+- doc CourseListViewController
+- doc CourseDetailViewController
+
+Ngay 3:
+- doc LessonService
+- doc LessonListViewController
+- doc LessonDetailViewController
+
+Ngay 4:
+- doc DemoDataStore
+- doc CoreDataManager
+- mo JollibeEduDataModel.xcdatamodeld
+
+Ngay 5:
+- doc AdminCourses
+- doc AdminLessons
+- doc AdminUsers
+
+
+7. TOM TAT 1 CAU
+==================================================
+
+Muon hoc de:
+- doc luong Router -> Service -> Store truoc
+- roi moi doc ViewController
+- phan Core Data thi doc entity truoc, manager sau

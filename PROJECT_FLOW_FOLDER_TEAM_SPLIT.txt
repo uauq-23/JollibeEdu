@@ -1,0 +1,501 @@
+JOLLIBEEEDU - FUNCTION FLOW, FOLDER EXPLANATION, TEAM SPLIT
+
+Project name:
+- OnlineCourseManagement
+- App display name: JolibeeEdu
+- UIKit + Storyboard iOS app
+
+==================================================
+1. TONG QUAN CHUC NANG
+==================================================
+
+JolibeeEdu la app hoc online co 3 nhom luong chinh:
+
+1. Guest flow
+- Khach vao app co the xem trang chu, xem danh sach khoa hoc, xem chi tiet khoa hoc
+- Chua dang nhap thi co the:
+  - Browse courses
+  - Xem chi tiet khoa hoc
+  - Dang ky tai khoan
+  - Dang nhap
+  - Quen mat khau
+
+2. Student flow
+- Sau khi dang nhap voi role student:
+  - Vao StudentTabBarController
+  - Xem Home
+  - Xem Courses
+  - Xem Dashboard
+  - Xem My Courses
+  - Xem Profile
+- Student co the:
+  - Dang ky khoa hoc mien phi hoac thanh toan khoa hoc co phi
+  - Hoc lesson
+  - Danh dau hoan thanh bai hoc
+  - Theo doi progress
+  - Sua thong tin ca nhan
+  - Doi mat khau
+  - Dang xuat
+
+3. Admin flow
+- Sau khi dang nhap voi role admin:
+  - Vao AdminRootTabBarController
+  - Quan ly Users
+  - Quan ly Courses
+  - Quan ly Categories
+  - Xem Reports
+  - Tu Courses co the vao Admin Lessons de quan ly lesson theo khoa hoc
+- Admin co the dang xuat tu cac man admin
+
+==================================================
+2. LUONG CHUC NANG CHI TIET
+==================================================
+
+2.1. Luong khoi dong app
+- AppDelegate.swift
+  - Goi theme chung cho app
+- SceneDelegate.swift
+  - Tao UIWindow
+  - Gan RootRouter
+  - Dieu huong root ban dau
+- RootRouter.swift
+  - Neu khong co session -> vao Guest
+  - Neu co session va role la admin -> vao AdminRootTabBarController
+  - Neu co session va role la student -> vao StudentTabBarController
+
+2.2. Guest flow
+- GuestHomeViewController
+  - Hero banner
+  - Feature cards
+  - Popular courses
+- CourseListViewController
+  - Search
+  - Category chips
+  - Danh sach khoa hoc
+- CourseDetailViewController
+  - Xem thong tin chi tiet khoa hoc
+  - Neu chua dang nhap:
+    - Bam enroll se chuyen qua Login
+  - Neu khoa hoc mien phi:
+    - Enroll truc tiep
+  - Neu khoa hoc co phi:
+    - Chuyen qua Payment
+- LoginViewController
+  - Dang nhap
+  - Route theo role
+- RegisterViewController
+  - Dang ky
+  - Luu session
+- ForgotPasswordViewController
+  - Xac minh email
+  - Dat lai mat khau
+
+2.3. Student flow
+- StudentTabBarController
+  - Home
+  - Courses
+  - Dashboard
+  - My Courses
+  - Profile
+
+- DashboardViewController
+  - Hien greeting
+  - Hien so lieu hoc tap
+  - Continue learning
+  - Quick actions
+
+- MyCoursesViewController
+  - Hien cac khoa hoc student da enroll
+  - Tach thanh:
+    - In Progress
+    - Completed
+  - Reload lai du lieu moi khi quay tro lai man hinh
+
+- LessonListViewController
+  - Lay lesson theo course
+  - Lay progress cua hoc vien
+  - Hien lesson da mo khoa / da hoan thanh
+  - Tap vao lesson hop le de vao LessonDetail
+
+- LessonDetailViewController
+  - Hien video player
+  - Ho tro:
+    - Video URL
+    - YouTube URL
+    - Video local trong bundle
+  - Mark as Completed
+  - Mo bai tiep theo theo unlock logic
+
+- LearningProgressViewController
+  - Hien tong hop progress
+  - Charts
+  - Danh sach khoa hoc va thanh tien do
+
+- ProfileViewController
+  - Xem/sua thong tin
+  - Doi mat khau
+  - Dang xuat
+
+2.4. Admin flow
+- AdminRootTabBarController
+  - Users
+  - Courses
+  - Categories
+  - Reports
+
+- AdminUsersViewController
+  - Tao user
+  - Sua user
+  - Xoa user
+  - Filter/search user
+
+- AdminCoursesViewController
+  - Tao course
+  - Sua course
+  - Xoa course
+  - Manage lessons
+
+- AdminCategoriesViewController
+  - Tao category
+  - Sua category
+  - Xoa category
+
+- AdminLessonsViewController
+  - Them lesson
+  - Sua lesson
+  - Xoa lesson
+  - Sap xep theo lesson_order
+
+- AdminReportsViewController
+  - Tong user
+  - Tong course
+  - Tong enrollments
+  - Revenue
+  - Charts
+  - Top courses
+
+==================================================
+3. DATA FLOW VA LUU TRU
+==================================================
+
+3.1. Session va routing
+- SessionManager.swift
+  - Luu token
+  - Luu current user
+  - Xac dinh role
+  - Dang xuat
+
+3.2. Core Data
+- CoreDataManager.swift
+  - Luu session dang nhap hien tai
+  - Mirror tai khoan
+  - Mirror enrollment
+  - Mirror progress
+  - Giup mo lai app van nho duoc hoc vien da hoc den dau
+
+3.3. Service layer
+- APIClient.swift
+  - URLSession
+  - GET / POST / PUT / PATCH / DELETE
+  - Header Bearer token
+- AuthService.swift
+  - Login / Register / Forgot / Change password
+- UserService.swift
+  - User CRUD va profile
+- CategoryService.swift
+  - Category CRUD
+- CourseService.swift
+  - Course CRUD / list / detail
+- LessonService.swift
+  - Lesson CRUD / list lesson theo khoa hoc
+- EnrollmentService.swift
+  - Enroll / unenroll / my courses
+- PaymentService.swift
+  - Tao payment / confirm payment
+- ProgressService.swift
+  - Update progress / get progress
+- ReportService.swift
+  - Lay so lieu va charts
+
+3.4. Demo fallback
+- DemoDataStore.swift
+  - Dung lam local backend de app chay demo khi chua co API that
+  - Seed san user, course, lesson, enrollment, payment, progress
+  - Dong bo du lieu voi Core Data
+
+==================================================
+4. GIAI THICH TUNG FOLDER
+==================================================
+
+4.1. JollibeEdu/
+- Chua file app chinh, storyboard, assets, services, controllers, models
+
+4.2. Assets.xcassets/
+- Chua AppIcon, mau, tai nguyen hinh anh asset catalog
+
+4.3. Base.lproj/
+- Chua storyboard giao dien:
+  - Main.storyboard
+  - LaunchScreen.storyboard
+
+4.4. Controllers/
+- Noi chua toan bo UIViewController cua app
+
+4.5. Controllers/Base/
+- Chua base controller dung chung
+- Muc dich:
+  - Tai su dung ScrollView + StackView pattern
+  - Kiem tra login/admin permission
+  - Giam code lap lai
+- File chinh:
+  - BaseStackContainerViewController.swift
+
+4.6. Controllers/Public/
+- Cac man khach va auth
+- File chinh:
+  - GuestHomeViewController.swift
+  - LoginViewController.swift
+  - RegisterViewController.swift
+  - ForgotPasswordViewController.swift
+  - CourseListViewController.swift
+  - CourseDetailViewController.swift
+  - PaymentViewController.swift
+
+4.7. Controllers/Student/
+- Cac man student sau khi dang nhap
+- File chinh:
+  - StudentTabBarController.swift
+  - DashboardViewController.swift
+  - MyCoursesViewController.swift
+  - LessonListViewController.swift
+  - LessonDetailViewController.swift
+  - LearningProgressViewController.swift
+  - ProfileViewController.swift
+  - ChangePasswordViewController.swift
+
+4.8. Controllers/Admin/
+- Cac man admin CRUD va bao cao
+- File chinh:
+  - AdminRootTabBarController.swift
+  - AdminUsersViewController.swift
+  - AdminCoursesViewController.swift
+  - AdminCategoriesViewController.swift
+  - AdminLessonsViewController.swift
+  - AdminReportsViewController.swift
+  - AdminSupport.swift
+
+4.9. Helpers/
+- Cac helper dung chung cho UI va routing
+- File chinh:
+  - AppTheme.swift
+  - AppFormatting.swift
+  - RootRouter.swift
+  - UIFactory.swift
+  - UIView+CardStyle.swift
+  - UIButton+AppStyle.swift
+  - UITextField+AppStyle.swift
+  - UIViewController+Alerts.swift
+
+4.10. Managers/
+- Cac thanh phan quan ly cap app
+- File chinh:
+  - SessionManager.swift
+  - ImageLoader.swift
+  - CoreDataManager.swift
+
+4.11. Models/
+- Cac model Codable va business model
+- File chinh:
+  - User.swift
+  - Category.swift
+  - Course.swift
+  - Lesson.swift
+  - Enrollment.swift
+  - ProgressRecord.swift
+  - Payment.swift
+  - ReportSummary.swift
+  - DashboardStats.swift
+  - APIResponse.swift
+
+4.12. Services/
+- Tang ket noi du lieu va xu ly nghiep vu
+- Chua API service that va demo fallback
+- File chinh:
+  - APIClient.swift
+  - AuthService.swift
+  - UserService.swift
+  - CategoryService.swift
+  - CourseService.swift
+  - LessonService.swift
+  - EnrollmentService.swift
+  - PaymentService.swift
+  - ProgressService.swift
+  - ReportService.swift
+  - DemoDataStore.swift
+
+4.13. Views/
+- Chua reusable UI components
+
+4.14. Views/Cells/
+- Chua custom UITableViewCell, UICollectionViewCell, chart views, empty/loading views
+- File chinh:
+  - FeatureCardCollectionViewCell.swift
+  - CourseCardCollectionViewCell.swift
+  - CategoryChipCollectionViewCell.swift
+  - StatsCardCollectionViewCell.swift
+  - ContinueLearningTableViewCell.swift
+  - MyCourseTableViewCell.swift
+  - LessonRowTableViewCell.swift
+  - ReviewTableViewCell.swift
+  - ProfileMenuTableViewCell.swift
+  - AdminSummaryCardCollectionViewCell.swift
+  - AdminListTableViewCell.swift
+  - EmptyStateView.swift
+  - LoadingStateView.swift
+  - ProgressChartView.swift
+  - MonthlyLineChartView.swift
+  - PaymentMethodSelectorView.swift
+
+4.15. Views/Common/
+- Chua view utility phuc vu Auto Layout noi dung dong
+- File chinh:
+  - IntrinsicCollectionView.swift
+  - IntrinsicTableView.swift
+
+==================================================
+5. PHAN CONG CHO 4 NGUOI
+==================================================
+
+Muc tieu:
+- Chia theo module de it dung file nhau
+- Moi nguoi phu trach mot cum chuc nang ro rang
+
+Nguoi 1 - Authentication + Root flow + Guest module
+- Phu trach:
+  - Login
+  - Register
+  - Forgot Password
+  - RootRouter
+  - SessionManager
+  - GuestHome
+  - CourseList
+  - CourseDetail
+- File lien quan:
+  - Controllers/Public/*
+  - Helpers/RootRouter.swift
+  - Managers/SessionManager.swift
+  - Services/AuthService.swift
+- Dau ra:
+  - Luong guest va auth chay end-to-end
+  - Route dung theo role
+
+Nguoi 2 - Student learning flow + Progress + Core Data
+- Phu trach:
+  - Dashboard
+  - My Courses
+  - Lesson List
+  - Lesson Detail
+  - Learning Progress
+  - Profile
+  - Change Password
+  - CoreDataManager
+  - Progress persistence
+- File lien quan:
+  - Controllers/Student/*
+  - Managers/CoreDataManager.swift
+  - Services/ProgressService.swift
+  - Services/EnrollmentService.swift
+- Dau ra:
+  - Hoc vien dang ky xong thay khoa hoc
+  - Hoc den dau luu den do
+  - Hoc xong thi vao Completed
+
+Nguoi 3 - Admin CRUD module
+- Phu trach:
+  - Admin Users
+  - Admin Courses
+  - Admin Categories
+  - Admin Lessons
+  - Admin logout va role protection
+- File lien quan:
+  - Controllers/Admin/AdminUsersViewController.swift
+  - Controllers/Admin/AdminCoursesViewController.swift
+  - Controllers/Admin/AdminCategoriesViewController.swift
+  - Controllers/Admin/AdminLessonsViewController.swift
+  - Controllers/Admin/AdminRootTabBarController.swift
+  - Services/UserService.swift
+  - Services/CourseService.swift
+  - Services/CategoryService.swift
+  - Services/LessonService.swift
+- Dau ra:
+  - CRUD admin chay day du
+  - Co validate form va refresh list
+
+Nguoi 4 - UI/Storyboard + Theme + Reports + QA
+- Phu trach:
+  - Main.storyboard
+  - Auto Layout
+  - Reusable cells/views
+  - Reports charts
+  - Theme app
+  - Test giao dien toan bo app
+- File lien quan:
+  - Base.lproj/Main.storyboard
+  - Helpers/AppTheme.swift
+  - Helpers/UIFactory.swift
+  - Views/Cells/*
+  - Controllers/Admin/AdminReportsViewController.swift
+- Dau ra:
+  - Storyboard sach warning
+  - UI dong bo brand JolibeeEdu
+  - Charts va states loading/empty/error
+
+==================================================
+6. DE XUAT CACH LAM VIEC NHOM
+==================================================
+
+De tranh xung dot:
+- Nguoi 1 lam Public + Auth
+- Nguoi 2 lam Student
+- Nguoi 3 lam Admin CRUD
+- Nguoi 4 lam Storyboard + UI reusable + QA
+
+Thu tu uu tien:
+1. Auth + RootRouter + Session
+2. Guest browsing + Course detail + Payment
+3. Student My Courses + Lesson + Progress
+4. Admin CRUD
+5. Reports + polish UI + test
+
+Nguyen tac:
+- Moi nguoi uu tien edit dung cum file cua minh
+- Neu sua file dung chung:
+  - AppTheme
+  - RootRouter
+  - SessionManager
+  - Main.storyboard
+  -> can thong nhat truoc
+
+==================================================
+7. TAI KHOAN ADMIN MAC DINH
+==================================================
+
+Admin account:
+- Email: Admin@edu.com
+- Password: 123
+
+Student demo:
+- Email: student@jolibeeedu.vn
+- Password: Student@123
+
+==================================================
+8. GOI Y NOP BAI / THUYET TRINH
+==================================================
+
+Khi thuyet trinh co the chia thanh 4 phan:
+- Phan 1: Gioi thieu kien truc project
+- Phan 2: Demo guest/student flow
+- Phan 3: Demo admin CRUD flow
+- Phan 4: Demo progress persistence, Core Data, storyboard va charts
+
+Ket thuc tai lieu.
