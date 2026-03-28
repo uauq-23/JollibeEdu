@@ -1,3 +1,10 @@
+//
+//  LessonListViewController.swift
+//  JollibeEdu
+//
+//  Created by Nguyễn Hoàng Quân on 22/3/26.
+//
+
 import UIKit
 
 final class LessonListViewController: AuthenticatedStackViewController, UITableViewDataSource, UITableViewDelegate {
@@ -18,20 +25,7 @@ final class LessonListViewController: AuthenticatedStackViewController, UITableV
     @IBOutlet private weak var lessonCardView: UIView!
     @IBOutlet private weak var lessonContainerView: UIView!
     @IBOutlet private weak var lessonContainerHeightConstraint: NSLayoutConstraint!
-
-    private lazy var lessonTableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 96
-        tableView.register(LessonRowTableViewCell.self, forCellReuseIdentifier: LessonRowTableViewCell.reuseIdentifier)
-        return tableView
-    }()
+    @IBOutlet private weak var lessonTableView: IntrinsicTableView!
 
     override func buildContent() {
         title = L10n.tr("lesson.list.title")
@@ -56,7 +50,14 @@ final class LessonListViewController: AuthenticatedStackViewController, UITableV
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.progressTintColor = AppTheme.brandOrange
         progressView.trackTintColor = AppTheme.softBorder
-        embed(lessonTableView, in: lessonContainerView)
+        lessonTableView.backgroundColor = .clear
+        lessonTableView.separatorStyle = .none
+        lessonTableView.isScrollEnabled = false
+        lessonTableView.dataSource = self
+        lessonTableView.delegate = self
+        lessonTableView.rowHeight = UITableView.automaticDimension
+        lessonTableView.estimatedRowHeight = 96
+        lessonTableView.register(LessonRowTableViewCell.self, forCellReuseIdentifier: LessonRowTableViewCell.reuseIdentifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,20 +71,6 @@ final class LessonListViewController: AuthenticatedStackViewController, UITableV
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateTableHeight()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateTableHeight() {

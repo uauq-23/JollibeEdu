@@ -13,24 +13,26 @@ final class AdminCategoriesViewController: AdminProtectedViewController, UIColle
     @IBOutlet private weak var listCardView: UIView!
     @IBOutlet private weak var listContainerView: UIView!
     @IBOutlet private weak var listHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var summaryCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var tableView: IntrinsicTableView!
 
-    private lazy var summaryCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
+    override func buildContent() {
+        title = L10n.tr("admin.categories.title")
+        navigationItem.largeTitleDisplayMode = .never
 
-    private lazy var tableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
+        summaryCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
+        listCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
+        if let layout = summaryCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        summaryCollectionView.backgroundColor = .clear
+        summaryCollectionView.isScrollEnabled = false
+        summaryCollectionView.dataSource = self
+        summaryCollectionView.delegate = self
+        summaryCollectionView.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
+
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -39,19 +41,6 @@ final class AdminCategoriesViewController: AdminProtectedViewController, UIColle
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
-        return tableView
-    }()
-
-    override func buildContent() {
-        title = L10n.tr("admin.categories.title")
-        navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCategoryTapped))
-
-        headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
-        summaryCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
-        listCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
-        embed(summaryCollectionView, in: summaryContainerView)
-        embed(tableView, in: listContainerView)
 
         Task {
             await loadCategories()
@@ -61,20 +50,6 @@ final class AdminCategoriesViewController: AdminProtectedViewController, UIColle
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateEmbeddedHeights()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateEmbeddedHeights() {
@@ -101,7 +76,7 @@ final class AdminCategoriesViewController: AdminProtectedViewController, UIColle
         }
     }
 
-    @objc private func addCategoryTapped() {
+    @IBAction private func addCategoryTapped(_ sender: Any) {
         presentCategoryForm(category: nil)
     }
 

@@ -9,6 +9,8 @@ final class GuestHomeViewController: BaseStackContainerViewController, UICollect
     @IBOutlet private weak var featureContainerView: UIView!
     @IBOutlet private weak var popularStateContainerView: UIView!
     @IBOutlet private weak var popularCollectionContainerView: UIView!
+    @IBOutlet private weak var featureCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var popularCollectionView: UICollectionView!
 
     private let features: [(icon: String, title: String, subtitle: String)] = [
         ("books.vertical.fill", "Nhiều khóa học", "Khám phá lộ trình học đa dạng từ lập trình, thiết kế đến ngoại ngữ."),
@@ -20,34 +22,6 @@ final class GuestHomeViewController: BaseStackContainerViewController, UICollect
     private var popularCourses: [Course] = []
     private let popularLoadingView = LoadingStateView()
     private let popularErrorView = EmptyStateView()
-
-    private lazy var featureCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(FeatureCardCollectionViewCell.self, forCellWithReuseIdentifier: FeatureCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
-
-    private lazy var popularCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 16
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(CourseCardCollectionViewCell.self, forCellWithReuseIdentifier: CourseCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
 
     override func buildContent() {
         title = "JolibeeEdu"
@@ -79,28 +53,33 @@ final class GuestHomeViewController: BaseStackContainerViewController, UICollect
             }
         }, for: .touchUpInside)
 
-        embedCollectionView(featureCollectionView, in: featureContainerView)
-        embedCollectionView(popularCollectionView, in: popularCollectionContainerView)
+        if let layout = featureCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        featureCollectionView.backgroundColor = .clear
+        featureCollectionView.isScrollEnabled = false
+        featureCollectionView.dataSource = self
+        featureCollectionView.delegate = self
+        featureCollectionView.register(FeatureCardCollectionViewCell.self, forCellWithReuseIdentifier: FeatureCardCollectionViewCell.reuseIdentifier)
+
+        if let layout = popularCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = 16
+            layout.minimumInteritemSpacing = 16
+        }
+        popularCollectionView.backgroundColor = .clear
+        popularCollectionView.showsHorizontalScrollIndicator = false
+        popularCollectionView.dataSource = self
+        popularCollectionView.delegate = self
+        popularCollectionView.register(CourseCardCollectionViewCell.self, forCellWithReuseIdentifier: CourseCardCollectionViewCell.reuseIdentifier)
+
         installPopularStateView(popularLoadingView)
         popularCollectionView.isHidden = true
 
         Task {
             await loadPopularCourses()
         }
-    }
-
-    private func embedCollectionView(_ collectionView: UIView, in container: UIView, inset: CGFloat = 12) {
-        guard collectionView.superview !== container else { return }
-        collectionView.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: container.topAnchor, constant: inset),
-            collectionView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: inset),
-            collectionView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -inset),
-            collectionView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -inset)
-        ])
     }
 
     private func installPopularStateView(_ stateView: UIView) {

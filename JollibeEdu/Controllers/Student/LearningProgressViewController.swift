@@ -15,22 +15,8 @@ final class LearningProgressViewController: AuthenticatedStackViewController, UI
     @IBOutlet private weak var courseProgressCardView: UIView!
     @IBOutlet private weak var courseProgressContainerView: UIView!
     @IBOutlet private weak var courseProgressHeightConstraint: NSLayoutConstraint!
-
-    private let courseProgressStack = UIStackView()
-
-    private lazy var metricsCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(StatsCardCollectionViewCell.self, forCellWithReuseIdentifier: StatsCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
+    @IBOutlet private weak var metricsCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var courseProgressStackView: UIStackView!
 
     override func buildContent() {
         title = "Tiến độ học tập"
@@ -40,12 +26,18 @@ final class LearningProgressViewController: AuthenticatedStackViewController, UI
         metricsCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
         courseProgressCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
 
-        courseProgressStack.translatesAutoresizingMaskIntoConstraints = false
-        courseProgressStack.axis = .vertical
-        courseProgressStack.spacing = 12
+        if let layout = metricsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        metricsCollectionView.backgroundColor = .clear
+        metricsCollectionView.isScrollEnabled = false
+        metricsCollectionView.dataSource = self
+        metricsCollectionView.delegate = self
+        metricsCollectionView.register(StatsCardCollectionViewCell.self, forCellWithReuseIdentifier: StatsCardCollectionViewCell.reuseIdentifier)
 
-        embed(metricsCollectionView, in: metricsContainerView)
-        embed(courseProgressStack, in: courseProgressContainerView)
+        courseProgressStackView.axis = .vertical
+        courseProgressStackView.spacing = 12
 
         Task {
             await loadProgress()
@@ -57,25 +49,11 @@ final class LearningProgressViewController: AuthenticatedStackViewController, UI
         updateEmbeddedHeights()
     }
 
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
-    }
-
     private func updateEmbeddedHeights() {
         metricsCollectionView.layoutIfNeeded()
-        courseProgressStack.layoutIfNeeded()
+        courseProgressStackView.layoutIfNeeded()
         metricsContainerHeightConstraint.constant = max(320, metricsCollectionView.collectionViewLayout.collectionViewContentSize.height)
-        courseProgressHeightConstraint.constant = max(180, courseProgressStack.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height)
+        courseProgressHeightConstraint.constant = max(180, courseProgressStackView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height)
     }
 
     private func loadProgress() async {
@@ -102,18 +80,18 @@ final class LearningProgressViewController: AuthenticatedStackViewController, UI
             ]
             metricsCollectionView.reloadData()
 
-            courseProgressStack.arrangedSubviews.forEach { view in
-                courseProgressStack.removeArrangedSubview(view)
+            courseProgressStackView.arrangedSubviews.forEach { view in
+                courseProgressStackView.removeArrangedSubview(view)
                 view.removeFromSuperview()
             }
 
             if courses.isEmpty {
                 let empty = EmptyStateView()
                 empty.configure(icon: "book.closed", title: "Chưa có progress", subtitle: "Hãy ghi danh một khóa học để bắt đầu theo dõi tiến độ.")
-                courseProgressStack.addArrangedSubview(empty)
+                courseProgressStackView.addArrangedSubview(empty)
             } else {
                 for course in courses {
-                    courseProgressStack.addArrangedSubview(makeProgressRow(for: course))
+                    courseProgressStackView.addArrangedSubview(makeProgressRow(for: course))
                 }
             }
             updateEmbeddedHeights()

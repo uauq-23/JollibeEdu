@@ -122,8 +122,24 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gh-feature-container">
                                                         <rect key="frame" x="0.0" y="398" width="392" height="520"/>
+                                                        <subviews>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gh-feature-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                <rect key="frame" x="12" y="12" width="368" height="496"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="gh-feature-layout">
+                                                                    <size key="itemSize" width="160" height="220"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                            </collectionView>
+                                                        </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstItem="gh-feature-collection" firstAttribute="top" secondItem="gh-feature-container" secondAttribute="top" constant="12" id="gh-fcv1"/>
+                                                            <constraint firstItem="gh-feature-collection" firstAttribute="leading" secondItem="gh-feature-container" secondAttribute="leading" constant="12" id="gh-fcv2"/>
+                                                            <constraint firstAttribute="trailing" secondItem="gh-feature-collection" secondAttribute="trailing" constant="12" id="gh-fcv3"/>
+                                                            <constraint firstAttribute="bottom" secondItem="gh-feature-collection" secondAttribute="bottom" constant="12" id="gh-fcv4"/>
                                                             <constraint firstAttribute="height" constant="520" id="gh-feature-container-h"/>
                                                         </constraints>
                                                     </view>
@@ -179,8 +195,24 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gh-popular-container">
                                                         <rect key="frame" x="0.0" y="1162" width="392" height="356"/>
+                                                        <subviews>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gh-popular-collection">
+                                                                <rect key="frame" x="12" y="12" width="368" height="332"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="16" minimumInteritemSpacing="16" id="gh-popular-layout">
+                                                                    <size key="itemSize" width="280" height="320"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                            </collectionView>
+                                                        </subviews>
                                                         <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
+                                                            <constraint firstItem="gh-popular-collection" firstAttribute="top" secondItem="gh-popular-container" secondAttribute="top" constant="12" id="gh-pcv1"/>
+                                                            <constraint firstItem="gh-popular-collection" firstAttribute="leading" secondItem="gh-popular-container" secondAttribute="leading" constant="12" id="gh-pcv2"/>
+                                                            <constraint firstAttribute="trailing" secondItem="gh-popular-collection" secondAttribute="trailing" constant="12" id="gh-pcv3"/>
+                                                            <constraint firstAttribute="bottom" secondItem="gh-popular-collection" secondAttribute="bottom" constant="12" id="gh-pcv4"/>
                                                             <constraint firstAttribute="height" constant="356" id="gh-popular-container-h"/>
                                                         </constraints>
                                                     </view>
@@ -221,7 +253,9 @@
                         <outlet property="contentStackView" destination="gh-stack" id="gh-o3"/>
                         <outlet property="contentView" destination="gh-content" id="gh-o2"/>
                         <outlet property="featureContainerView" destination="gh-feature-container" id="gh-oo2"/>
+                        <outlet property="featureCollectionView" destination="gh-feature-collection" id="gh-oo7"/>
                         <outlet property="heroCardView" destination="gh-hero" id="gh-oo3"/>
+                        <outlet property="popularCollectionView" destination="gh-popular-collection" id="gh-oo8"/>
                         <outlet property="popularCollectionContainerView" destination="gh-popular-container" id="gh-oo4"/>
                         <outlet property="popularStateContainerView" destination="gh-popular-state" id="gh-oo5"/>
                         <outlet property="scrollView" destination="gh-scroll" id="gh-o1"/>
@@ -542,7 +576,7 @@
                                                                             <constraint firstAttribute="height" constant="52" id="re-un-h"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <textInputTraits key="textInputTraits" autocapitalizationType="none" autocorrectionType="no"/>
+                                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                                                     </textField>
                                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="re-email">
                                                                         <rect key="frame" x="0.0" y="120" width="352" height="52"/>
@@ -672,8 +706,8 @@
                         <outlet property="loginButton" destination="re-login-btn" id="re-oo8"/>
                         <outlet property="passwordField" destination="re-password" id="re-oo9"/>
                         <outlet property="registerButton" destination="re-register-btn" id="re-oo10"/>
-                        <outlet property="usernameField" destination="re-username" id="re-oo11"/>
                         <outlet property="scrollView" destination="re-scroll" id="re-o1"/>
+                        <outlet property="usernameField" destination="re-username" id="re-oo11"/>
                         <segue destination="li-vc" kind="show" identifier="RegisterShowLogin" id="re-segue-login"/>
                         <segue destination="st-vc" kind="show" identifier="RegisterShowStudentRoot" id="re-segue-student-root"/>
                     </connections>
@@ -951,23 +985,46 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cl-category-container">
                                                         <rect key="frame" x="0.0" y="258" width="392" height="52"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" text="Danh mục sẽ hiển thị ở đây" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cl-category-placeholder">
-                                                                <rect key="frame" x="103.33333333333333" y="17" width="185.33333333333337" height="18"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <color key="textColor" red="0.38431372549999998" green="0.40000000000000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </label>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cl-category-collection">
+                                                                <rect key="frame" x="4" y="4" width="384" height="44"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cl-category-layout">
+                                                                    <size key="itemSize" width="100" height="38"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                            </collectionView>
                                                         </subviews>
                                                         <color key="backgroundColor" red="1" green="0.97647058819999999" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="52" id="cl-category-h"/>
-                                                            <constraint firstItem="cl-category-placeholder" firstAttribute="centerX" secondItem="cl-category-container" secondAttribute="centerX" id="cl-cc1"/>
-                                                            <constraint firstItem="cl-category-placeholder" firstAttribute="centerY" secondItem="cl-category-container" secondAttribute="centerY" id="cl-cc2"/>
+                                                            <constraint firstItem="cl-category-collection" firstAttribute="top" secondItem="cl-category-container" secondAttribute="top" constant="4" id="cl-cc1"/>
+                                                            <constraint firstItem="cl-category-collection" firstAttribute="leading" secondItem="cl-category-container" secondAttribute="leading" constant="4" id="cl-cc2"/>
+                                                            <constraint firstAttribute="trailing" secondItem="cl-category-collection" secondAttribute="trailing" constant="4" id="cl-cc3"/>
+                                                            <constraint firstAttribute="bottom" secondItem="cl-category-collection" secondAttribute="bottom" constant="4" id="cl-cc4"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cl-course-container">
                                                         <rect key="frame" x="0.0" y="328" width="392" height="540"/>
+                                                        <subviews>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cl-course-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="392" height="540"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="14" id="cl-course-layout">
+                                                                    <size key="itemSize" width="170" height="428"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                            </collectionView>
+                                                        </subviews>
                                                         <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
+                                                            <constraint firstItem="cl-course-collection" firstAttribute="top" secondItem="cl-course-container" secondAttribute="top" id="cl-cv1"/>
+                                                            <constraint firstItem="cl-course-collection" firstAttribute="leading" secondItem="cl-course-container" secondAttribute="leading" id="cl-cv2"/>
+                                                            <constraint firstAttribute="trailing" secondItem="cl-course-collection" secondAttribute="trailing" id="cl-cv3"/>
+                                                            <constraint firstAttribute="bottom" secondItem="cl-course-collection" secondAttribute="bottom" id="cl-cv4"/>
                                                             <constraint firstAttribute="height" constant="540" id="cl-course-h"/>
                                                         </constraints>
                                                     </view>
@@ -1030,8 +1087,10 @@
                     </view>
                     <connections>
                         <outlet property="categoryContainerView" destination="cl-category-container" id="cl-oo1"/>
+                        <outlet property="categoryCollectionView" destination="cl-category-collection" id="cl-oo8"/>
                         <outlet property="contentStackView" destination="cl-stack" id="cl-o3"/>
                         <outlet property="contentView" destination="cl-content" id="cl-o2"/>
+                        <outlet property="courseCollectionView" destination="cl-course-collection" id="cl-oo9"/>
                         <outlet property="courseContainerHeightConstraint" destination="cl-course-h" id="cl-oo2"/>
                         <outlet property="courseContainerView" destination="cl-course-container" id="cl-oo3"/>
                         <outlet property="emptyStateContainerView" destination="cl-empty-container" id="cl-oo4"/>
@@ -1297,10 +1356,10 @@
                                 <rect key="frame" x="0.0" y="62" width="440" height="822"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pa-content">
-                                        <rect key="frame" x="0.0" y="0.0" width="440" height="1210"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="440" height="1280"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="pa-stack">
-                                                <rect key="frame" x="24" y="20" width="392" height="1170"/>
+                                                <rect key="frame" x="24" y="20" width="392" height="1240"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pa-header-card">
                                                         <rect key="frame" x="0.0" y="0.0" width="392" height="150"/>
@@ -1424,32 +1483,41 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-card">
-                                                        <rect key="frame" x="0.0" y="700" width="392" height="244"/>
+                                                        <rect key="frame" x="0.0" y="700" width="392" height="314"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Momo QR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-title">
                                                                 <rect key="frame" x="20" y="20" width="352" height="26.333333333333329"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                             </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" text="NGUYEN HOANG QUAN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-account-name">
+                                                                <rect key="frame" x="20" y="58.333333333333378" width="352" height="26.333333333333336"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" text="1000 3565 742" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-account-number">
+                                                                <rect key="frame" x="20" y="90.666666666666629" width="352" height="21.666666666666671"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                                <color key="textColor" red="0.38431372549999998" green="0.40000000000000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-qr">
-                                                                <rect key="frame" x="20" y="56" width="352" height="110"/>
+                                                                <rect key="frame" x="20" y="124.33333333333337" width="352" height="132"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" text="QR Momo Placeholder" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-qr-label">
-                                                                        <rect key="frame" x="72" y="37" width="208" height="36"/>
-                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                                    </label>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-qr-image">
+                                                                        <rect key="frame" x="110" y="14" width="132" height="104"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="132" id="pa-mqi1"/>
+                                                                            <constraint firstAttribute="height" constant="104" id="pa-mqi2"/>
+                                                                        </constraints>
+                                                                    </imageView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" red="0.99607843139999996" green="0.94117647059999998" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="110" id="pa-mq0"/>
-                                                                    <constraint firstItem="pa-momo-qr-label" firstAttribute="centerX" secondItem="pa-momo-qr" secondAttribute="centerX" id="pa-mq1"/>
-                                                                    <constraint firstItem="pa-momo-qr-label" firstAttribute="centerY" secondItem="pa-momo-qr" secondAttribute="centerY" id="pa-mq2"/>
+                                                                    <constraint firstAttribute="height" constant="132" id="pa-mq0"/>
+                                                                    <constraint firstItem="pa-momo-qr-image" firstAttribute="centerX" secondItem="pa-momo-qr" secondAttribute="centerX" id="pa-mq1"/>
+                                                                    <constraint firstItem="pa-momo-qr-image" firstAttribute="centerY" secondItem="pa-momo-qr" secondAttribute="centerY" id="pa-mq2"/>
                                                                 </constraints>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-sub">
-                                                                <rect key="frame" x="20" y="178" width="352" height="46"/>
-                                                                <string key="text">1. Mở ví Momo
-2. Quét mã giả lập trên màn hình
-3. Xác nhận để hoàn tất đăng ký</string>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Quét mã QR để xác nhận thanh toán cho khóa học." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-momo-sub">
+                                                                <rect key="frame" x="20" y="268.33333333333326" width="352" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" red="0.38431372549999998" green="0.40000000000000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </label>
@@ -1457,19 +1525,25 @@
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="pa-momo-title" firstAttribute="top" secondItem="pa-momo-card" secondAttribute="top" constant="20" id="pa-mc1"/>
+                                                            <constraint firstItem="pa-momo-account-name" firstAttribute="leading" secondItem="pa-momo-card" secondAttribute="leading" constant="20" id="pa-mc10"/>
+                                                            <constraint firstAttribute="trailing" secondItem="pa-momo-account-name" secondAttribute="trailing" constant="20" id="pa-mc11"/>
+                                                            <constraint firstItem="pa-momo-account-number" firstAttribute="top" secondItem="pa-momo-account-name" secondAttribute="bottom" constant="6" id="pa-mc12"/>
+                                                            <constraint firstItem="pa-momo-account-number" firstAttribute="leading" secondItem="pa-momo-card" secondAttribute="leading" constant="20" id="pa-mc13"/>
+                                                            <constraint firstAttribute="trailing" secondItem="pa-momo-account-number" secondAttribute="trailing" constant="20" id="pa-mc14"/>
+                                                            <constraint firstItem="pa-momo-qr" firstAttribute="top" secondItem="pa-momo-account-number" secondAttribute="bottom" constant="12" id="pa-mc15"/>
                                                             <constraint firstItem="pa-momo-title" firstAttribute="leading" secondItem="pa-momo-card" secondAttribute="leading" constant="20" id="pa-mc2"/>
-                                                            <constraint firstItem="pa-momo-qr" firstAttribute="top" secondItem="pa-momo-title" secondAttribute="bottom" constant="12" id="pa-mc3"/>
+                                                            <constraint firstItem="pa-momo-account-name" firstAttribute="top" secondItem="pa-momo-title" secondAttribute="bottom" constant="12" id="pa-mc3"/>
                                                             <constraint firstItem="pa-momo-qr" firstAttribute="leading" secondItem="pa-momo-card" secondAttribute="leading" constant="20" id="pa-mc4"/>
                                                             <constraint firstAttribute="trailing" secondItem="pa-momo-qr" secondAttribute="trailing" constant="20" id="pa-mc5"/>
                                                             <constraint firstItem="pa-momo-sub" firstAttribute="top" secondItem="pa-momo-qr" secondAttribute="bottom" constant="12" id="pa-mc6"/>
                                                             <constraint firstItem="pa-momo-sub" firstAttribute="leading" secondItem="pa-momo-card" secondAttribute="leading" constant="20" id="pa-mc7"/>
                                                             <constraint firstAttribute="trailing" secondItem="pa-momo-sub" secondAttribute="trailing" constant="20" id="pa-mc8"/>
                                                             <constraint firstAttribute="trailing" secondItem="pa-momo-title" secondAttribute="trailing" constant="20" id="pa-mc9"/>
-                                                            <constraint firstAttribute="height" constant="244" id="pa-momo-h"/>
+                                                            <constraint firstAttribute="height" constant="314" id="pa-momo-h"/>
                                                         </constraints>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pa-confirm-btn">
-                                                        <rect key="frame" x="0.0" y="962" width="392" height="52"/>
+                                                        <rect key="frame" x="0.0" y="1032" width="392" height="52"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="52" id="pa-confirm-h"/>
                                                         </constraints>
@@ -1477,7 +1551,7 @@
                                                         <state key="normal" title="Xác nhận thanh toán"/>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Trạng thái giao dịch sẽ hiển thị ở đây sau khi bấm thanh toán." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa-state-label">
-                                                        <rect key="frame" x="0.0" y="1032" width="392" height="138"/>
+                                                        <rect key="frame" x="0.0" y="1102" width="392" height="138"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="138" id="pa-state-h"/>
                                                         </constraints>
@@ -1526,7 +1600,11 @@
                         <outlet property="cvvField" destination="pa-cvv" id="pa-oo6"/>
                         <outlet property="expiryField" destination="pa-expiry" id="pa-oo7"/>
                         <outlet property="headerCardView" destination="pa-header-card" id="pa-oo8"/>
+                        <outlet property="momoAccountNameLabel" destination="pa-momo-account-name" id="pa-oo16"/>
+                        <outlet property="momoAccountNumberLabel" destination="pa-momo-account-number" id="pa-oo17"/>
                         <outlet property="momoCardView" destination="pa-momo-card" id="pa-oo9"/>
+                        <outlet property="momoInstructionLabel" destination="pa-momo-sub" id="pa-oo14"/>
+                        <outlet property="momoQRImageView" destination="pa-momo-qr-image" id="pa-oo15"/>
                         <outlet property="scrollView" destination="pa-scroll" id="pa-o1"/>
                         <outlet property="selectorContainerView" destination="pa-selector-container" id="pa-oo10"/>
                         <outlet property="stateLabel" destination="pa-state-label" id="pa-oo11"/>
@@ -1609,8 +1687,24 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="da-stats-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="324"/>
+                                                                <subviews>
+                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="da-stats-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="324"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="da-stats-layout">
+                                                                            <size key="itemSize" width="160" height="152"/>
+                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                        </collectionViewFlowLayout>
+                                                                    </collectionView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="da-stats-collection" firstAttribute="top" secondItem="da-stats-container" secondAttribute="top" id="da-scv1"/>
+                                                                    <constraint firstItem="da-stats-collection" firstAttribute="leading" secondItem="da-stats-container" secondAttribute="leading" id="da-scv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="da-stats-collection" secondAttribute="trailing" id="da-scv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="da-stats-collection" secondAttribute="bottom" id="da-scv4"/>
                                                                     <constraint firstAttribute="height" constant="324" id="da-stats-h"/>
                                                                 </constraints>
                                                             </view>
@@ -1635,8 +1729,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="da-continue-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="196"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="140" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="da-continue-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="196"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="da-continue-table" firstAttribute="top" secondItem="da-continue-container" secondAttribute="top" id="da-ctv1"/>
+                                                                    <constraint firstItem="da-continue-table" firstAttribute="leading" secondItem="da-continue-container" secondAttribute="leading" id="da-ctv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="da-continue-table" secondAttribute="trailing" id="da-ctv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="da-continue-table" secondAttribute="bottom" id="da-ctv4"/>
                                                                     <constraint firstAttribute="height" constant="196" id="da-continue-h"/>
                                                                 </constraints>
                                                             </view>
@@ -1779,6 +1883,7 @@
                         <outlet property="contentStackView" destination="da-stack" id="da-o3"/>
                         <outlet property="contentView" destination="da-content" id="da-o2"/>
                         <outlet property="continueCardView" destination="da-continue-card" id="da-oo3"/>
+                        <outlet property="continueTableView" destination="da-continue-table" id="da-oo15"/>
                         <outlet property="continueContainerHeightConstraint" destination="da-continue-h" id="da-oo4"/>
                         <outlet property="continueContainerView" destination="da-continue-container" id="da-oo5"/>
                         <outlet property="greetingCardView" destination="da-greeting-card" id="da-oo6"/>
@@ -1788,6 +1893,7 @@
                         <outlet property="quickActionsCardView" destination="da-quick-card" id="da-oo10"/>
                         <outlet property="scrollView" destination="da-scroll" id="da-o1"/>
                         <outlet property="statsCardView" destination="da-stats-card" id="da-oo11"/>
+                        <outlet property="statsCollectionView" destination="da-stats-collection" id="da-oo16"/>
                         <outlet property="statsContainerHeightConstraint" destination="da-stats-h" id="da-oo12"/>
                         <outlet property="statsContainerView" destination="da-stats-container" id="da-oo13"/>
                         <outlet property="summaryLabel" destination="da-summary-label" id="da-oo14"/>
@@ -1868,8 +1974,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="my-inprogress-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="310"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="150" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="my-inprogress-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="310"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="my-inprogress-table" firstAttribute="top" secondItem="my-inprogress-container" secondAttribute="top" id="my-ipt1"/>
+                                                                    <constraint firstItem="my-inprogress-table" firstAttribute="leading" secondItem="my-inprogress-container" secondAttribute="leading" id="my-ipt2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="my-inprogress-table" secondAttribute="trailing" id="my-ipt3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="my-inprogress-table" secondAttribute="bottom" id="my-ipt4"/>
                                                                     <constraint firstAttribute="height" constant="310" id="my-ip-h"/>
                                                                 </constraints>
                                                             </view>
@@ -1894,8 +2010,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="my-completed-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="344"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="150" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="my-completed-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="344"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="my-completed-table" firstAttribute="top" secondItem="my-completed-container" secondAttribute="top" id="my-cpt1"/>
+                                                                    <constraint firstItem="my-completed-table" firstAttribute="leading" secondItem="my-completed-container" secondAttribute="leading" id="my-cpt2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="my-completed-table" secondAttribute="trailing" id="my-cpt3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="my-completed-table" secondAttribute="bottom" id="my-cpt4"/>
                                                                     <constraint firstAttribute="height" constant="344" id="my-cp-h"/>
                                                                 </constraints>
                                                             </view>
@@ -1946,12 +2072,14 @@
                         <outlet property="completedCardView" destination="my-completed-card" id="my-oo1"/>
                         <outlet property="completedContainerView" destination="my-completed-container" id="my-oo2"/>
                         <outlet property="completedHeightConstraint" destination="my-cp-h" id="my-oo3"/>
+                        <outlet property="completedTableView" destination="my-completed-table" id="my-oo10"/>
                         <outlet property="contentStackView" destination="my-stack" id="my-o3"/>
                         <outlet property="contentView" destination="my-content" id="my-o2"/>
                         <outlet property="headerCardView" destination="my-header-card" id="my-oo4"/>
                         <outlet property="inProgressCardView" destination="my-inprogress-card" id="my-oo5"/>
                         <outlet property="inProgressContainerView" destination="my-inprogress-container" id="my-oo6"/>
                         <outlet property="inProgressHeightConstraint" destination="my-ip-h" id="my-oo7"/>
+                        <outlet property="inProgressTableView" destination="my-inprogress-table" id="my-oo9"/>
                         <outlet property="scrollView" destination="my-scroll" id="my-o1"/>
                         <outlet property="searchField" destination="my-search" id="my-oo8"/>
                         <segue destination="ll-vc" kind="show" identifier="MyCoursesShowLessonList" id="my-segue-lesson-list"/>
@@ -2007,6 +2135,7 @@
                                                             <constraint firstItem="ll-course-image" firstAttribute="leading" secondItem="ll-summary-card" secondAttribute="leading" constant="20" id="ll-sm00"/>
                                                             <constraint firstAttribute="trailing" secondItem="ll-course-image" secondAttribute="trailing" constant="20" id="ll-sm01"/>
                                                             <constraint firstItem="ll-course-title" firstAttribute="top" secondItem="ll-course-image" secondAttribute="bottom" constant="12" id="ll-sm1"/>
+                                                            <constraint firstAttribute="bottom" secondItem="ll-progress-view" secondAttribute="bottom" constant="20" id="ll-sm10"/>
                                                             <constraint firstItem="ll-course-title" firstAttribute="leading" secondItem="ll-summary-card" secondAttribute="leading" constant="20" id="ll-sm2"/>
                                                             <constraint firstAttribute="trailing" secondItem="ll-course-title" secondAttribute="trailing" constant="20" id="ll-sm3"/>
                                                             <constraint firstItem="ll-progress-label" firstAttribute="top" secondItem="ll-course-title" secondAttribute="bottom" constant="12" id="ll-sm4"/>
@@ -2015,12 +2144,11 @@
                                                             <constraint firstItem="ll-progress-view" firstAttribute="top" secondItem="ll-progress-label" secondAttribute="bottom" constant="18" id="ll-sm7"/>
                                                             <constraint firstItem="ll-progress-view" firstAttribute="leading" secondItem="ll-summary-card" secondAttribute="leading" constant="20" id="ll-sm8"/>
                                                             <constraint firstAttribute="trailing" secondItem="ll-progress-view" secondAttribute="trailing" constant="20" id="ll-sm9"/>
-                                                            <constraint firstAttribute="bottom" secondItem="ll-progress-view" secondAttribute="bottom" constant="20" id="ll-sm10"/>
                                                             <constraint firstAttribute="height" constant="332" id="ll-summary-h"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ll-lesson-card">
-                                                        <rect key="frame" x="0.0" y="350" width="392" height="520.33333333333337"/>
+                                                        <rect key="frame" x="0.0" y="350.00000000000006" width="392" height="520.33333333333348"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Nội dung khóa học" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ll-lessons-title">
                                                                 <rect key="frame" x="20" y="20" width="352" height="26.333333333333329"/>
@@ -2028,8 +2156,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ll-lesson-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="442"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="96" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="ll-lesson-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="442"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ll-lesson-table" firstAttribute="top" secondItem="ll-lesson-container" secondAttribute="top" id="ll-ltv1"/>
+                                                                    <constraint firstItem="ll-lesson-table" firstAttribute="leading" secondItem="ll-lesson-container" secondAttribute="leading" id="ll-ltv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ll-lesson-table" secondAttribute="trailing" id="ll-ltv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ll-lesson-table" secondAttribute="bottom" id="ll-ltv4"/>
                                                                     <constraint firstAttribute="height" constant="442" id="ll-lesson-h"/>
                                                                 </constraints>
                                                             </view>
@@ -2084,6 +2222,7 @@
                         <outlet property="lessonCardView" destination="ll-lesson-card" id="ll-oo2"/>
                         <outlet property="lessonContainerHeightConstraint" destination="ll-lesson-h" id="ll-oo3"/>
                         <outlet property="lessonContainerView" destination="ll-lesson-container" id="ll-oo4"/>
+                        <outlet property="lessonTableView" destination="ll-lesson-table" id="ll-oo8"/>
                         <outlet property="progressLabel" destination="ll-progress-label" id="ll-oo5"/>
                         <outlet property="progressView" destination="ll-progress-view" id="ll-oo6"/>
                         <outlet property="scrollView" destination="ll-scroll" id="ll-o1"/>
@@ -2151,12 +2290,12 @@
                                                         <rect key="frame" x="0.0" y="410" width="392" height="228"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="3/12 bài học hoàn thành • 25%" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ld-progress-label">
-                                                                <rect key="frame" x="20" y="20" width="352" height="18"/>
+                                                                <rect key="frame" x="20" y="20" width="352" height="16"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <color key="textColor" red="0.38431372549999998" green="0.40000000000000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </label>
                                                             <progressView opaque="NO" contentMode="scaleToFill" progress="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="ld-progress-view">
-                                                                <rect key="frame" x="20" y="56" width="352" height="4"/>
+                                                                <rect key="frame" x="20" y="54" width="352" height="4"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="4" id="ld-pv-h"/>
                                                                 </constraints>
@@ -2340,8 +2479,24 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lp-metrics-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="320"/>
+                                                                <subviews>
+                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lp-metrics-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="320"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="lp-metrics-layout">
+                                                                            <size key="itemSize" width="160" height="152"/>
+                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                        </collectionViewFlowLayout>
+                                                                    </collectionView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="lp-metrics-collection" firstAttribute="top" secondItem="lp-metrics-container" secondAttribute="top" id="lp-mcv1"/>
+                                                                    <constraint firstItem="lp-metrics-collection" firstAttribute="leading" secondItem="lp-metrics-container" secondAttribute="leading" id="lp-mcv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="lp-metrics-collection" secondAttribute="trailing" id="lp-mcv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="lp-metrics-collection" secondAttribute="bottom" id="lp-mcv4"/>
                                                                     <constraint firstAttribute="height" constant="320" id="lp-metrics-h"/>
                                                                 </constraints>
                                                             </view>
@@ -2366,8 +2521,17 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lp-course-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="260"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lp-course-stack">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="260"/>
+                                                                    </stackView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="lp-course-stack" firstAttribute="top" secondItem="lp-course-container" secondAttribute="top" id="lp-csv1"/>
+                                                                    <constraint firstItem="lp-course-stack" firstAttribute="leading" secondItem="lp-course-container" secondAttribute="leading" id="lp-csv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="lp-course-stack" secondAttribute="trailing" id="lp-csv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="lp-course-stack" secondAttribute="bottom" id="lp-csv4"/>
                                                                     <constraint firstAttribute="height" constant="260" id="lp-course-h"/>
                                                                 </constraints>
                                                             </view>
@@ -2418,10 +2582,12 @@
                         <outlet property="contentStackView" destination="lp-stack" id="lp-o3"/>
                         <outlet property="contentView" destination="lp-content" id="lp-o2"/>
                         <outlet property="courseProgressCardView" destination="lp-course-card" id="lp-oo1"/>
+                        <outlet property="courseProgressStackView" destination="lp-course-stack" id="lp-oo8"/>
                         <outlet property="courseProgressContainerView" destination="lp-course-container" id="lp-oo2"/>
                         <outlet property="courseProgressHeightConstraint" destination="lp-course-h" id="lp-oo3"/>
                         <outlet property="introCardView" destination="lp-intro-card" id="lp-oo4"/>
                         <outlet property="metricsCardView" destination="lp-metrics-card" id="lp-oo5"/>
+                        <outlet property="metricsCollectionView" destination="lp-metrics-collection" id="lp-oo9"/>
                         <outlet property="metricsContainerHeightConstraint" destination="lp-metrics-h" id="lp-oo6"/>
                         <outlet property="metricsContainerView" destination="lp-metrics-container" id="lp-oo7"/>
                         <outlet property="scrollView" destination="lp-scroll" id="lp-o1"/>
@@ -2471,7 +2637,7 @@
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                                 <color key="textColor" red="0.76078431369999999" green="0.25882352939999997" blue="0.039215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" text="Cập nhật hồ sơ, đổi mật khẩu và theo dõi hành trình học tại một nơi." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr-header-sub">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" text="Cập nhật hồ sơ, đổi mật khẩu và chọn ngôn ngữ hệ thống tại một nơi." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr-header-sub">
                                                                 <rect key="frame" x="24" y="170" width="344" height="36"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" red="0.38431372549999998" green="0.40000000000000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2502,6 +2668,9 @@
                                                             </label>
                                                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pr-edit-switch">
                                                                 <rect key="frame" x="323" y="52" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="editSwitchChanged:" destination="pr-vc" eventType="valueChanged" id="pr-act-edit"/>
+                                                                </connections>
                                                             </switch>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Họ và tên" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pr-fullname">
                                                                 <rect key="frame" x="20" y="96.333333333333314" width="352" height="52"/>
@@ -2525,6 +2694,9 @@
                                                                     <constraint firstAttribute="height" constant="56" id="pr-sbh"/>
                                                                 </constraints>
                                                                 <state key="normal" title="Lưu thay đổi"/>
+                                                                <connections>
+                                                                    <action selector="saveButtonTapped:" destination="pr-vc" eventType="touchUpInside" id="pr-act-save"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2780,6 +2952,13 @@
         <scene sceneID="au-scene">
             <objects>
                 <viewController storyboardIdentifier="AdminUsersViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="au-vc" customClass="AdminUsersViewController" customModule="JollibeEdu" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="au-nav-item">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="au-add-item">
+                            <connections>
+                                <action selector="addUserTapped:" destination="au-vc" id="au-add-action"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <view key="view" contentMode="scaleToFill" id="au-root">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="884"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2829,8 +3008,24 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="au-summary-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="320"/>
+                                                                <subviews>
+                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="au-summary-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="320"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="au-summary-layout">
+                                                                            <size key="itemSize" width="160" height="132"/>
+                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                        </collectionViewFlowLayout>
+                                                                    </collectionView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="au-summary-collection" firstAttribute="top" secondItem="au-summary-container" secondAttribute="top" id="au-scv1"/>
+                                                                    <constraint firstItem="au-summary-collection" firstAttribute="leading" secondItem="au-summary-container" secondAttribute="leading" id="au-scv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="au-summary-collection" secondAttribute="trailing" id="au-scv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="au-summary-collection" secondAttribute="bottom" id="au-scv4"/>
                                                                     <constraint firstAttribute="height" constant="320" id="au-summary-h"/>
                                                                 </constraints>
                                                             </view>
@@ -2872,8 +3067,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="au-list-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="401"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="150" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="au-list-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="401"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="au-list-table" firstAttribute="top" secondItem="au-list-container" secondAttribute="top" id="au-ltv1"/>
+                                                                    <constraint firstItem="au-list-table" firstAttribute="leading" secondItem="au-list-container" secondAttribute="leading" id="au-ltv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="au-list-table" secondAttribute="trailing" id="au-ltv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="au-list-table" secondAttribute="bottom" id="au-ltv4"/>
                                                                     <constraint firstAttribute="height" constant="401" id="au-list-h"/>
                                                                 </constraints>
                                                             </view>
@@ -2931,8 +3136,10 @@
                         <outlet property="scrollView" destination="au-scroll" id="au-o1"/>
                         <outlet property="searchField" destination="au-search" id="au-oo6"/>
                         <outlet property="summaryCardView" destination="au-summary-card" id="au-oo7"/>
+                        <outlet property="summaryCollectionView" destination="au-summary-collection" id="au-oo10"/>
                         <outlet property="summaryContainerView" destination="au-summary-container" id="au-oo8"/>
                         <outlet property="summaryHeightConstraint" destination="au-summary-h" id="au-oo9"/>
+                        <outlet property="tableView" destination="au-list-table" id="au-oo11"/>
                         <segue destination="li-vc" kind="show" identifier="AdminUsersShowLogin" id="au-segue-login"/>
                     </connections>
                 </viewController>
@@ -2944,6 +3151,13 @@
         <scene sceneID="ac-scene">
             <objects>
                 <viewController storyboardIdentifier="AdminCoursesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ac-vc" customClass="AdminCoursesViewController" customModule="JollibeEdu" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ac-nav-item">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ac-add-item">
+                            <connections>
+                                <action selector="addCourseTapped:" destination="ac-vc" id="ac-add-action"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <view key="view" contentMode="scaleToFill" id="ac-root">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="884"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2993,8 +3207,24 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ac-summary-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="320"/>
+                                                                <subviews>
+                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ac-summary-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="320"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="ac-summary-layout">
+                                                                            <size key="itemSize" width="160" height="132"/>
+                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                        </collectionViewFlowLayout>
+                                                                    </collectionView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ac-summary-collection" firstAttribute="top" secondItem="ac-summary-container" secondAttribute="top" id="ac-scv1"/>
+                                                                    <constraint firstItem="ac-summary-collection" firstAttribute="leading" secondItem="ac-summary-container" secondAttribute="leading" id="ac-scv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ac-summary-collection" secondAttribute="trailing" id="ac-scv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ac-summary-collection" secondAttribute="bottom" id="ac-scv4"/>
                                                                     <constraint firstAttribute="height" constant="320" id="ac-summary-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3027,8 +3257,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ac-list-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="420"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="150" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="ac-list-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="420"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ac-list-table" firstAttribute="top" secondItem="ac-list-container" secondAttribute="top" id="ac-ltv1"/>
+                                                                    <constraint firstItem="ac-list-table" firstAttribute="leading" secondItem="ac-list-container" secondAttribute="leading" id="ac-ltv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ac-list-table" secondAttribute="trailing" id="ac-ltv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ac-list-table" secondAttribute="bottom" id="ac-ltv4"/>
                                                                     <constraint firstAttribute="height" constant="420" id="ac-list-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3085,8 +3325,10 @@
                         <outlet property="scrollView" destination="ac-scroll" id="ac-o1"/>
                         <outlet property="searchField" destination="ac-search" id="ac-oo5"/>
                         <outlet property="summaryCardView" destination="ac-summary-card" id="ac-oo6"/>
+                        <outlet property="summaryCollectionView" destination="ac-summary-collection" id="ac-oo9"/>
                         <outlet property="summaryContainerView" destination="ac-summary-container" id="ac-oo7"/>
                         <outlet property="summaryHeightConstraint" destination="ac-summary-h" id="ac-oo8"/>
+                        <outlet property="tableView" destination="ac-list-table" id="ac-oo10"/>
                         <segue destination="al-vc" kind="show" identifier="AdminCoursesShowLessons" id="ac-segue-lessons"/>
                         <segue destination="ll-vc" kind="show" identifier="AdminCoursesShowPreview" id="ac-segue-preview"/>
                     </connections>
@@ -3099,6 +3341,13 @@
         <scene sceneID="ag-scene">
             <objects>
                 <viewController storyboardIdentifier="AdminCategoriesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ag-vc" customClass="AdminCategoriesViewController" customModule="JollibeEdu" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="ag-nav-item">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ag-add-item">
+                            <connections>
+                                <action selector="addCategoryTapped:" destination="ag-vc" id="ag-add-action"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <view key="view" contentMode="scaleToFill" id="ag-root">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="884"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3148,8 +3397,24 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ag-summary-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="320"/>
+                                                                <subviews>
+                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ag-summary-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="320"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="ag-summary-layout">
+                                                                            <size key="itemSize" width="160" height="132"/>
+                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                        </collectionViewFlowLayout>
+                                                                    </collectionView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ag-summary-collection" firstAttribute="top" secondItem="ag-summary-container" secondAttribute="top" id="ag-scv1"/>
+                                                                    <constraint firstItem="ag-summary-collection" firstAttribute="leading" secondItem="ag-summary-container" secondAttribute="leading" id="ag-scv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ag-summary-collection" secondAttribute="trailing" id="ag-scv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ag-summary-collection" secondAttribute="bottom" id="ag-scv4"/>
                                                                     <constraint firstAttribute="height" constant="320" id="ag-summary-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3174,8 +3439,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ag-list-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="366"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="130" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="ag-list-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="366"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ag-list-table" firstAttribute="top" secondItem="ag-list-container" secondAttribute="top" id="ag-ltv1"/>
+                                                                    <constraint firstItem="ag-list-table" firstAttribute="leading" secondItem="ag-list-container" secondAttribute="leading" id="ag-ltv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ag-list-table" secondAttribute="trailing" id="ag-ltv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ag-list-table" secondAttribute="bottom" id="ag-ltv4"/>
                                                                     <constraint firstAttribute="height" constant="366" id="ag-list-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3231,8 +3506,10 @@
                         <outlet property="listHeightConstraint" destination="ag-list-h" id="ag-oo4"/>
                         <outlet property="scrollView" destination="ag-scroll" id="ag-o1"/>
                         <outlet property="summaryCardView" destination="ag-summary-card" id="ag-oo5"/>
+                        <outlet property="summaryCollectionView" destination="ag-summary-collection" id="ag-oo8"/>
                         <outlet property="summaryContainerView" destination="ag-summary-container" id="ag-oo6"/>
                         <outlet property="summaryHeightConstraint" destination="ag-summary-h" id="ag-oo7"/>
+                        <outlet property="tableView" destination="ag-list-table" id="ag-oo9"/>
                         <segue destination="ac-vc" kind="show" identifier="AdminCategoriesShowCourses" id="ag-segue-courses"/>
                     </connections>
                 </viewController>
@@ -3293,8 +3570,24 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-summary-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="320"/>
+                                                                <subviews>
+                                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-summary-collection" customClass="IntrinsicCollectionView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="320"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="14" id="ar-summary-layout">
+                                                                            <size key="itemSize" width="160" height="132"/>
+                                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                        </collectionViewFlowLayout>
+                                                                    </collectionView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ar-summary-collection" firstAttribute="top" secondItem="ar-summary-container" secondAttribute="top" id="ar-scv1"/>
+                                                                    <constraint firstItem="ar-summary-collection" firstAttribute="leading" secondItem="ar-summary-container" secondAttribute="leading" id="ar-scv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ar-summary-collection" secondAttribute="trailing" id="ar-scv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ar-summary-collection" secondAttribute="bottom" id="ar-scv4"/>
                                                                     <constraint firstAttribute="height" constant="320" id="ar-summary-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3311,23 +3604,32 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-revenue-card">
-                                                        <rect key="frame" x="0.0" y="600.33333333333337" width="392" height="296"/>
+                                                        <rect key="frame" x="0.0" y="600.33333333333337" width="392" height="316"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Doanh thu 6 tháng" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ar-revenue-title">
                                                                 <rect key="frame" x="20" y="20" width="352" height="24"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-revenue-container">
-                                                                <rect key="frame" x="20" y="56" width="352" height="220"/>
+                                                                <rect key="frame" x="20" y="56" width="352" height="240"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-revenue-chart" customClass="MonthlyLineChartView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="240"/>
+                                                                    </view>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="220" id="ar-rch"/>
+                                                                    <constraint firstItem="ar-revenue-chart" firstAttribute="top" secondItem="ar-revenue-container" secondAttribute="top" id="ar-rcv1"/>
+                                                                    <constraint firstItem="ar-revenue-chart" firstAttribute="leading" secondItem="ar-revenue-container" secondAttribute="leading" id="ar-rcv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ar-revenue-chart" secondAttribute="trailing" id="ar-rcv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ar-revenue-chart" secondAttribute="bottom" id="ar-rcv4"/>
+                                                                    <constraint firstAttribute="height" constant="240" id="ar-rch"/>
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="296" id="ar-rv-h"/>
+                                                            <constraint firstAttribute="height" constant="316" id="ar-rv-h"/>
                                                             <constraint firstItem="ar-revenue-title" firstAttribute="top" secondItem="ar-revenue-card" secondAttribute="top" constant="20" id="ar-rv1"/>
                                                             <constraint firstItem="ar-revenue-title" firstAttribute="leading" secondItem="ar-revenue-card" secondAttribute="leading" constant="20" id="ar-rv2"/>
                                                             <constraint firstAttribute="trailing" secondItem="ar-revenue-title" secondAttribute="trailing" constant="20" id="ar-rv2b"/>
@@ -3346,8 +3648,17 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-growth-container">
                                                                 <rect key="frame" x="20" y="55.999999999999886" width="352" height="220"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-growth-chart" customClass="ProgressChartView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="220"/>
+                                                                    </view>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ar-growth-chart" firstAttribute="top" secondItem="ar-growth-container" secondAttribute="top" id="ar-gcv1"/>
+                                                                    <constraint firstItem="ar-growth-chart" firstAttribute="leading" secondItem="ar-growth-container" secondAttribute="leading" id="ar-gcv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ar-growth-chart" secondAttribute="trailing" id="ar-gcv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ar-growth-chart" secondAttribute="bottom" id="ar-gcv4"/>
                                                                     <constraint firstAttribute="height" constant="220" id="ar-gch"/>
                                                                 </constraints>
                                                             </view>
@@ -3373,8 +3684,17 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-category-container">
                                                                 <rect key="frame" x="20" y="58.333333333333485" width="352" height="260"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ar-category-stack">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="260"/>
+                                                                    </stackView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ar-category-stack" firstAttribute="top" secondItem="ar-category-container" secondAttribute="top" id="ar-csv1"/>
+                                                                    <constraint firstItem="ar-category-stack" firstAttribute="leading" secondItem="ar-category-container" secondAttribute="leading" id="ar-csv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ar-category-stack" secondAttribute="trailing" id="ar-csv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ar-category-stack" secondAttribute="bottom" id="ar-csv4"/>
                                                                     <constraint firstAttribute="height" constant="260" id="ar-category-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3399,8 +3719,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ar-top-container">
                                                                 <rect key="frame" x="20" y="58.333333333333258" width="352" height="222"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="150" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="ar-top-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="222"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="ar-top-table" firstAttribute="top" secondItem="ar-top-container" secondAttribute="top" id="ar-ttv1"/>
+                                                                    <constraint firstItem="ar-top-table" firstAttribute="leading" secondItem="ar-top-container" secondAttribute="leading" id="ar-ttv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="ar-top-table" secondAttribute="trailing" id="ar-ttv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="ar-top-table" secondAttribute="bottom" id="ar-ttv4"/>
                                                                     <constraint firstAttribute="height" constant="222" id="ar-top-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3454,16 +3784,21 @@
                         <outlet property="contentStackView" destination="ar-stack" id="ar-o3"/>
                         <outlet property="contentView" destination="ar-content" id="ar-o2"/>
                         <outlet property="headerCardView" destination="ar-header-card" id="ar-oo4"/>
+                        <outlet property="categoryDistributionStack" destination="ar-category-stack" id="ar-oo15"/>
                         <outlet property="revenueCardView" destination="ar-revenue-card" id="ar-oo5"/>
+                        <outlet property="revenueChartView" destination="ar-revenue-chart" id="ar-oo16"/>
                         <outlet property="revenueContainerView" destination="ar-revenue-container" id="ar-oo6"/>
                         <outlet property="scrollView" destination="ar-scroll" id="ar-o1"/>
                         <outlet property="summaryCardView" destination="ar-summary-card" id="ar-oo7"/>
+                        <outlet property="summaryCollectionView" destination="ar-summary-collection" id="ar-oo17"/>
                         <outlet property="summaryContainerView" destination="ar-summary-container" id="ar-oo8"/>
                         <outlet property="summaryHeightConstraint" destination="ar-summary-h" id="ar-oo9"/>
                         <outlet property="topCoursesCardView" destination="ar-top-card" id="ar-oo10"/>
                         <outlet property="topCoursesContainerView" destination="ar-top-container" id="ar-oo11"/>
                         <outlet property="topCoursesHeightConstraint" destination="ar-top-h" id="ar-oo12"/>
+                        <outlet property="topCoursesTableView" destination="ar-top-table" id="ar-oo18"/>
                         <outlet property="userGrowthCardView" destination="ar-growth-card" id="ar-oo13"/>
+                        <outlet property="userGrowthChartView" destination="ar-growth-chart" id="ar-oo19"/>
                         <outlet property="userGrowthContainerView" destination="ar-growth-container" id="ar-oo14"/>
                         <segue destination="cd-vc" kind="show" identifier="AdminReportsShowCourseDetail" id="ar-segue-course-detail"/>
                         <segue destination="al-vc" kind="show" identifier="AdminReportsShowLessons" id="ar-segue-lessons"/>
@@ -3477,6 +3812,13 @@
         <scene sceneID="al-scene">
             <objects>
                 <viewController storyboardIdentifier="AdminLessonsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="al-vc" customClass="AdminLessonsViewController" customModule="JollibeEdu" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="al-nav-item">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="al-add-item">
+                            <connections>
+                                <action selector="addLessonTapped:" destination="al-vc" id="al-add-action"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <view key="view" contentMode="scaleToFill" id="al-root">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="884"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3500,7 +3842,7 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="352" height="102"/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Sắp xếp lesson theo thứ tự, chỉnh video URL, duration và lesson order ngay trên mobile." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al-header-sub">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Sắp xếp lesson, chọn ảnh từ bộ sưu tập và thời lượng sẽ tự khớp theo video YouTube." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al-header-sub">
                                                                         <rect key="frame" x="0.0" y="112" width="352" height="36"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.38431372549999998" green="0.40000000000000002" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3526,8 +3868,18 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="al-list-container">
                                                                 <rect key="frame" x="20" y="58.333333333333314" width="352" height="438"/>
+                                                                <subviews>
+                                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" separatorStyle="none" rowHeight="-1" estimatedRowHeight="150" style="plain" translatesAutoresizingMaskIntoConstraints="NO" id="al-list-table" customClass="IntrinsicTableView" customModule="JollibeEdu" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="352" height="438"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </tableView>
+                                                                </subviews>
                                                                 <color key="backgroundColor" red="0.98431372550000007" green="0.97254901959999995" blue="0.96078431370000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="al-list-table" firstAttribute="top" secondItem="al-list-container" secondAttribute="top" id="al-ltv1"/>
+                                                                    <constraint firstItem="al-list-table" firstAttribute="leading" secondItem="al-list-container" secondAttribute="leading" id="al-ltv2"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="al-list-table" secondAttribute="trailing" id="al-ltv3"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="al-list-table" secondAttribute="bottom" id="al-ltv4"/>
                                                                     <constraint firstAttribute="height" constant="438" id="al-list-h"/>
                                                                 </constraints>
                                                             </view>
@@ -3582,6 +3934,7 @@
                         <outlet property="listContainerView" destination="al-list-container" id="al-oo3"/>
                         <outlet property="listHeightConstraint" destination="al-list-h" id="al-oo4"/>
                         <outlet property="scrollView" destination="al-scroll" id="al-o1"/>
+                        <outlet property="tableView" destination="al-list-table" id="al-oo6"/>
                         <outlet property="titleLabel" destination="al-title-label" id="al-oo5"/>
                         <segue destination="ld-vc" kind="show" identifier="AdminLessonsShowLessonDetail" id="al-segue-lesson-detail"/>
                     </connections>
@@ -3597,7 +3950,7 @@
         <segue reference="da-segue-profile"/>
         <segue reference="my-segue-progress"/>
         <segue reference="ll-segue-lesson-detail"/>
-        <segue reference="ac-segue-preview"/>
+        <segue reference="ld-segue-lesson-list"/>
         <segue reference="st-segue-my-courses"/>
         <segue reference="re-segue-student-root"/>
         <segue reference="ar-segue-course-detail"/>
