@@ -1,3 +1,10 @@
+//
+//  CourseDetailViewController.swift
+//  JollibeEdu
+//
+//  Created by Nguyễn Hoàng Quân on 22/3/26.
+//
+
 import UIKit
 
 final class CourseDetailViewController: BaseStackContainerViewController, UITableViewDataSource, UITableViewDelegate {

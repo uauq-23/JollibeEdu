@@ -105,7 +105,45 @@ struct MonthlyReport: Codable, Equatable {
 
 final class DemoDataStore {
     static let shared = DemoDataStore()
-    private static let currentCatalogVersion = 16
+    private static let currentCatalogVersion = 17
+    private static let seededYouTubeDurations: [String: String] = [
+        "als-345E2E0": "03:43",
+        "8Xg7E9shq0U": "07:05:17",
+        "2icljqpaddk": "11:54:55",
+        "GwQRH-KFlP0": "30:24",
+        "jJJwUoBVmFY": "10:51",
+        "LrjlW00kkws": "03:27",
+        "eIhwHjYKGng": "03:10",
+        "5altc8xTzBg": "05:01:36",
+        "7CqJlxBYj-M": "01:47:02",
+        "NqzdVN2tyvQ": "03:59:38",
+        "h9ven4N67i0": "03:09",
+        "vO1bpod0vKM": "18:57",
+        "vd2dtkMINIw": "01:08:41",
+        "Lj-QNEo07yg": "29:05",
+        "8hhXamKIdsY": "32:16",
+        "aVLgL5LJh5Y": "02:10",
+        "-yl003Wbs78": "23:39",
+        "CxbHw93oWP0": "53:31",
+        "uRQH2CFvedY": "05:17:49",
+        "-28gv8W8B0s": "51:06",
+        "Dnh0jP-GA0o": "13:00",
+        "bI48pbtMgKE": "54:11",
+        "o8Zi8yvgD9k": "08:04",
+        "3M1G1tdbtDo": "02:59",
+        "wATufOPMK-A": "44:26",
+        "YyZhYCe68fw": "41:24",
+        "0lftKa16QFc": "15:22",
+        "zUoZIyy5kRg": "01:29",
+        "0Pg2fvSC05A": "07:00",
+        "GWj2R_0wAGk": "10:55",
+        "rzbFQnTWhPM": "02:18",
+        "HXV3zeQKqGY": "04:20:39",
+        "8M83OFKAnFk": "13:22",
+        "iGjSdWxKfjA": "08:34",
+        "ET7qsJv6nLk": "02:14",
+        "pd36Jay0B_8": "09:48"
+    ]
 
     // Legacy defaults are only kept to migrate older builds.
     // The active source of truth is now the Core Data-backed payload below.
@@ -223,6 +261,7 @@ final class DemoDataStore {
         migrateDefaultStudentCredentials()
         migrateUsernames()
         migrateCatalogIfNeeded()
+        refreshAllCourseMetadata()
     }
 
     private func migrateUsernames() {
@@ -465,14 +504,15 @@ final class DemoDataStore {
             order: Int,
             duration: String
         ) -> Lesson {
-            Lesson(
+            let resolvedVideoURL = LessonVideoSuggestionProvider.suggestedURL(for: title, fallback: videoURL)
+            return Lesson(
                 id: id,
                 course_id: courseID,
                 title: title,
                 thumbnail_url: "bundle://\(imageSeed)",
-                video_url: LessonVideoSuggestionProvider.suggestedURL(for: title, fallback: videoURL),
+                video_url: resolvedVideoURL,
                 lesson_order: order,
-                duration: duration
+                duration: Self.seededLessonDuration(for: resolvedVideoURL, fallback: duration)
             )
         }
 
@@ -525,7 +565,7 @@ final class DemoDataStore {
             Category(id: "cat-soft", name: "Kỹ năng mềm", description: "Presentation, teamwork, study habits")
         ]
 
-        let courses = [
+        var courses = [
             course(id: "course-ios", slug: "xay-dung-ios-uikit", title: "Xây dựng ứng dụng iOS với UIKit", description: "Học cách chuyển một hệ thống web thực tế sang trải nghiệm iPhone chỉn chu bằng UIKit, Storyboard, URLSession và mô hình dữ liệu sạch.", thumbnailSeed: "jbe-course-ios", instructorName: "Le Hoang Son", instructorEmail: "son@jolibeeedu.vn", categoryID: "cat-mobile", categoryName: "Mobile Development", studentCount: 148, reviewCount: 46, rating: 4.9, duration: "08:30:00", price: 1299000, status: "published", createdAt: "2026-01-10", completedLessons: 4, totalLessons: 7),
             course(id: "course-uiux", slug: "ui-ux-thuc-chien", title: "UI/UX Thực chiến cho sản phẩm EdTech", description: "Tối ưu hành trình học tập, thiết kế dashboard, lesson player và payment flow theo tư duy sản phẩm.", thumbnailSeed: "jbe-course-uiux", instructorName: "Pham Bao Ngan", instructorEmail: "ngan@jolibeeedu.vn", categoryID: "cat-design", categoryName: "Thiết kế", studentCount: 93, reviewCount: 21, rating: 4.8, duration: "05:10:00", price: 890000, status: "published", createdAt: "2026-01-12", completedLessons: 0, totalLessons: 5),
             course(id: "course-english", slug: "giao-tiep-tieng-anh-tu-tin", title: "Giao tiếp tiếng Anh tự tin cho người đi làm", description: "Luyện phản xạ tiếng Anh với các tình huống họp nhóm, báo cáo tiến độ, thuyết trình và email.", thumbnailSeed: "jbe-course-english", instructorName: "Pham Bao Ngan", instructorEmail: "ngan@jolibeeedu.vn", categoryID: "cat-language", categoryName: "Ngoại ngữ", studentCount: 212, reviewCount: 85, rating: 4.7, duration: "06:20:00", price: 0, status: "published", createdAt: "2026-02-01", completedLessons: 0, totalLessons: 6),
@@ -618,7 +658,28 @@ final class DemoDataStore {
             lesson(id: "speak-5", courseID: "course-speaking", title: "Presentation frameworks", imageSeed: "jbe-speak-5", videoURL: "https://www.youtube.com/watch?v=pd36Jay0B_8", order: 5, duration: "08:58")
         ]
 
+        Self.applyCourseMetadata(to: &courses, using: lessons)
         return (categories, courses, lessons)
+    }
+
+    private static func seededLessonDuration(for videoURL: String, fallback: String) -> String {
+        guard let videoID = MediaURLResolver.extractedYouTubeVideoID(from: videoURL) else {
+            return fallback
+        }
+        return seededYouTubeDurations[videoID] ?? fallback
+    }
+
+    private static func totalLessonDurationString(for lessons: [Lesson]) -> String {
+        let totalSeconds = lessons.compactMap { AppFormatting.seconds(fromDurationString: $0.duration) }.reduce(0, +)
+        return AppFormatting.durationString(from: totalSeconds, alwaysShowHours: true)
+    }
+
+    private static func applyCourseMetadata(to courses: inout [Course], using lessons: [Lesson]) {
+        for index in courses.indices {
+            let courseLessons = lessons.filter { $0.course_id == courses[index].id }
+            courses[index].duration = totalLessonDurationString(for: courseLessons)
+            courses[index].total_lessons = courseLessons.count
+        }
     }
 
     private func currentUserID() throws -> String {
@@ -802,13 +863,28 @@ final class DemoDataStore {
         }
         let studentCount = state.enrollments.filter { $0.courseID == course.id }.count
         updated.student_count = max(studentCount, course.student_count ?? 0)
-        updated.total_lessons = state.lessons.filter { $0.course_id == course.id }.count
+        let courseLessons = state.lessons.filter { $0.course_id == course.id }
+        updated.total_lessons = courseLessons.count
+        updated.duration = Self.totalLessonDurationString(for: courseLessons)
         if let userID {
             let completed = lessonProgress(for: userID, courseID: course.id).count
             updated.completed_lessons = completed
             updated.progress = progressPercent(for: userID, courseID: course.id)
         }
         return updated
+    }
+
+    private func refreshAllCourseMetadata() {
+        for course in state.courses {
+            refreshCourseMetadata(for: course.id)
+        }
+    }
+
+    private func refreshCourseMetadata(for courseID: String) {
+        guard let index = state.courses.firstIndex(where: { $0.id == courseID }) else { return }
+        let courseLessons = state.lessons.filter { $0.course_id == courseID }
+        state.courses[index].duration = Self.totalLessonDurationString(for: courseLessons)
+        state.courses[index].total_lessons = courseLessons.count
     }
 
     private func updateEnrollmentProgress(for userID: String, courseID: String) {
@@ -1161,6 +1237,7 @@ final class DemoDataStore {
             duration: data["duration"] ?? "00:00"
         )
         state.lessons.append(lesson)
+        refreshCourseMetadata(for: targetCourse.id)
         persist()
         return lesson
     }
@@ -1175,6 +1252,7 @@ final class DemoDataStore {
         state.lessons[index].video_url = data["video_url"] ?? state.lessons[index].video_url
         state.lessons[index].lesson_order = Int(data["lesson_order"] ?? "") ?? state.lessons[index].lesson_order
         state.lessons[index].duration = data["duration"] ?? state.lessons[index].duration
+        refreshCourseMetadata(for: state.lessons[index].course_id)
         persist()
         return state.lessons[index]
     }
@@ -1188,6 +1266,9 @@ final class DemoDataStore {
            !courseHasLessons(courseID),
            let courseIndex = state.courses.firstIndex(where: { $0.id == courseID }) {
             state.courses[courseIndex].status = "draft"
+        }
+        if let courseID {
+            refreshCourseMetadata(for: courseID)
         }
         persist()
     }
