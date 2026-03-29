@@ -1,3 +1,10 @@
+//
+//  CourseListViewController.swift
+//  JollibeEdu
+//
+//  Created by Nguyễn Hoàng Quân on 22/3/26.
+//
+
 import UIKit
 
 final class CourseListViewController: BaseStackContainerViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
@@ -10,6 +17,8 @@ final class CourseListViewController: BaseStackContainerViewController, UICollec
     @IBOutlet private weak var emptyStateContainerView: UIView!
     @IBOutlet private weak var loadMoreButton: UIButton!
     @IBOutlet private weak var courseContainerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var categoryCollectionView: UICollectionView!
+    @IBOutlet private weak var courseCollectionView: IntrinsicCollectionView!
 
     private var categories: [Category] = []
     private var loadedCourses: [Course] = []
@@ -21,34 +30,6 @@ final class CourseListViewController: BaseStackContainerViewController, UICollec
     private var hasMore = true
 
     private let emptyResultsView = EmptyStateView()
-
-    private lazy var categoryCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.showsHorizontalScrollIndicator = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(CategoryChipCollectionViewCell.self, forCellWithReuseIdentifier: CategoryChipCollectionViewCell.reuseIdentifier)
-        return view
-    }()
-
-    private lazy var courseCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 16
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(CourseCardCollectionViewCell.self, forCellWithReuseIdentifier: CourseCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
 
     override func buildContent() {
         title = L10n.tr("course.list.title")
@@ -73,9 +54,36 @@ final class CourseListViewController: BaseStackContainerViewController, UICollec
             title: L10n.tr("course.list.empty.title"),
             subtitle: L10n.tr("course.list.empty.subtitle")
         )
-        embed(categoryCollectionView, in: categoryContainerView, inset: 4)
-        embed(courseCollectionView, in: courseContainerView, inset: 0)
-        embed(emptyResultsView, in: emptyStateContainerView, inset: 12)
+        if let layout = categoryCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = 10
+            layout.minimumInteritemSpacing = 10
+        }
+        categoryCollectionView.backgroundColor = .clear
+        categoryCollectionView.showsHorizontalScrollIndicator = false
+        categoryCollectionView.dataSource = self
+        categoryCollectionView.delegate = self
+        categoryCollectionView.register(CategoryChipCollectionViewCell.self, forCellWithReuseIdentifier: CategoryChipCollectionViewCell.reuseIdentifier)
+
+        if let layout = courseCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 16
+            layout.minimumInteritemSpacing = 14
+        }
+        courseCollectionView.backgroundColor = .clear
+        courseCollectionView.isScrollEnabled = false
+        courseCollectionView.dataSource = self
+        courseCollectionView.delegate = self
+        courseCollectionView.register(CourseCardCollectionViewCell.self, forCellWithReuseIdentifier: CourseCardCollectionViewCell.reuseIdentifier)
+
+        emptyStateContainerView.subviews.forEach { $0.removeFromSuperview() }
+        emptyResultsView.translatesAutoresizingMaskIntoConstraints = false
+        emptyStateContainerView.addSubview(emptyResultsView)
+        NSLayoutConstraint.activate([
+            emptyResultsView.topAnchor.constraint(equalTo: emptyStateContainerView.topAnchor, constant: 12),
+            emptyResultsView.leadingAnchor.constraint(equalTo: emptyStateContainerView.leadingAnchor, constant: 12),
+            emptyResultsView.trailingAnchor.constraint(equalTo: emptyStateContainerView.trailingAnchor, constant: -12),
+            emptyResultsView.bottomAnchor.constraint(equalTo: emptyStateContainerView.bottomAnchor, constant: -12)
+        ])
         emptyStateContainerView.isHidden = true
 
         Task {
@@ -95,20 +103,6 @@ final class CourseListViewController: BaseStackContainerViewController, UICollec
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateCourseCollectionHeight()
-    }
-
-    private func embed(_ view: UIView, in container: UIView, inset: CGFloat) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor, constant: inset),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: inset),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -inset),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -inset)
-        ])
     }
 
     private func updateCourseCollectionHeight() {
