@@ -19,34 +19,8 @@ final class DashboardViewController: AuthenticatedStackViewController, UICollect
     @IBOutlet private weak var browseButton: UIButton!
     @IBOutlet private weak var progressButton: UIButton!
     @IBOutlet private weak var profileButton: UIButton!
-
-    private lazy var statsCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(StatsCardCollectionViewCell.self, forCellWithReuseIdentifier: StatsCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
-
-    private lazy var continueTableView: IntrinsicTableView = {
-        let view = IntrinsicTableView(frame: .zero, style: .plain)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.separatorStyle = .none
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.rowHeight = UITableView.automaticDimension
-        view.estimatedRowHeight = 140
-        view.register(ContinueLearningTableViewCell.self, forCellReuseIdentifier: ContinueLearningTableViewCell.reuseIdentifier)
-        return view
-    }()
+    @IBOutlet private weak var statsCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var continueTableView: IntrinsicTableView!
 
     override func buildContent() {
         title = "Dashboard"
@@ -58,8 +32,24 @@ final class DashboardViewController: AuthenticatedStackViewController, UICollect
         achievementCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
         quickActionsCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
 
-        embed(statsCollectionView, in: statsContainerView)
-        embed(continueTableView, in: continueContainerView)
+        if let layout = statsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        statsCollectionView.backgroundColor = .clear
+        statsCollectionView.isScrollEnabled = false
+        statsCollectionView.dataSource = self
+        statsCollectionView.delegate = self
+        statsCollectionView.register(StatsCardCollectionViewCell.self, forCellWithReuseIdentifier: StatsCardCollectionViewCell.reuseIdentifier)
+
+        continueTableView.backgroundColor = .clear
+        continueTableView.separatorStyle = .none
+        continueTableView.isScrollEnabled = false
+        continueTableView.dataSource = self
+        continueTableView.delegate = self
+        continueTableView.rowHeight = UITableView.automaticDimension
+        continueTableView.estimatedRowHeight = 140
+        continueTableView.register(ContinueLearningTableViewCell.self, forCellReuseIdentifier: ContinueLearningTableViewCell.reuseIdentifier)
 
         greetingLabel.font = UIFont.boldSystemFont(ofSize: 30)
         greetingLabel.textColor = AppTheme.textPrimary
@@ -100,20 +90,6 @@ final class DashboardViewController: AuthenticatedStackViewController, UICollect
         Task {
             await loadDashboard()
         }
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateEmbeddedHeights() {

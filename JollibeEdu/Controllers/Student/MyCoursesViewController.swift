@@ -15,9 +15,8 @@ final class MyCoursesViewController: AuthenticatedStackViewController, UITableVi
     @IBOutlet private weak var completedCardView: UIView!
     @IBOutlet private weak var completedContainerView: UIView!
     @IBOutlet private weak var completedHeightConstraint: NSLayoutConstraint!
-
-    private lazy var inProgressTableView = makeTableView()
-    private lazy var completedTableView = makeTableView()
+    @IBOutlet private weak var inProgressTableView: IntrinsicTableView!
+    @IBOutlet private weak var completedTableView: IntrinsicTableView!
 
     override func buildContent() {
         title = "Khóa học của tôi"
@@ -29,8 +28,8 @@ final class MyCoursesViewController: AuthenticatedStackViewController, UITableVi
 
         searchField.applyAppStyle(placeholder: "Tìm khóa học đã ghi danh...")
         searchField.addTarget(self, action: #selector(searchChanged), for: .editingChanged)
-        embed(inProgressTableView, in: inProgressContainerView)
-        embed(completedTableView, in: completedContainerView)
+        configure(tableView: inProgressTableView)
+        configure(tableView: completedTableView)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,9 +40,12 @@ final class MyCoursesViewController: AuthenticatedStackViewController, UITableVi
         }
     }
 
-    private func makeTableView() -> IntrinsicTableView {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateTableHeights()
+    }
+
+    private func configure(tableView: IntrinsicTableView) {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -52,26 +54,6 @@ final class MyCoursesViewController: AuthenticatedStackViewController, UITableVi
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
         tableView.register(MyCourseTableViewCell.self, forCellReuseIdentifier: MyCourseTableViewCell.reuseIdentifier)
-        return tableView
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateTableHeights()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateTableHeights() {

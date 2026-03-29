@@ -5,7 +5,6 @@ final class ProfileViewController: AuthenticatedStackViewController, UITableView
 
     private enum MenuItem: CaseIterable {
         case language
-        case appearance
         case changePassword
         case logout
 
@@ -13,8 +12,6 @@ final class ProfileViewController: AuthenticatedStackViewController, UITableView
             switch self {
             case .language:
                 return "\(L10n.tr("profile.menu.language")) • \(AppSettingsManager.shared.language.displayName)"
-            case .appearance:
-                return "\(L10n.tr("profile.menu.appearance")) • \(AppSettingsManager.shared.appearanceMode.displayName)"
             case .changePassword:
                 return L10n.tr("profile.menu.changePassword")
             case .logout:
@@ -26,8 +23,6 @@ final class ProfileViewController: AuthenticatedStackViewController, UITableView
             switch self {
             case .language:
                 return "globe"
-            case .appearance:
-                return "circle.lefthalf.filled"
             case .changePassword:
                 return "lock.shield.fill"
             case .logout:
@@ -99,14 +94,8 @@ final class ProfileViewController: AuthenticatedStackViewController, UITableView
         emailField.autocapitalizationType = .none
         saveButton.applyPrimaryStyle()
         saveButton.setTitle(L10n.tr("profile.save"), for: .normal)
-        saveButton.addAction(UIAction { [weak self] _ in
-            self?.saveProfile()
-        }, for: .touchUpInside)
 
         editSwitch.onTintColor = AppTheme.brandOrange
-        editSwitch.addAction(UIAction { [weak self] _ in
-            self?.updateEditingState()
-        }, for: .valueChanged)
         embed(menuTableView, in: menuContainerView)
 
         Task {
@@ -187,12 +176,18 @@ final class ProfileViewController: AuthenticatedStackViewController, UITableView
         }
     }
 
+    @IBAction private func editSwitchChanged(_ sender: UISwitch) {
+        updateEditingState()
+    }
+
+    @IBAction private func saveButtonTapped(_ sender: UIButton) {
+        saveProfile()
+    }
+
     private func handleMenuItem(_ item: MenuItem) {
         switch item {
         case .language:
             presentLanguagePicker()
-        case .appearance:
-            presentAppearancePicker()
         case .changePassword:
             performSegue(withIdentifier: "ProfileShowChangePassword", sender: self)
         case .logout:
