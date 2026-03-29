@@ -1,3 +1,10 @@
+//
+//  FirebaseSyncManager.swift
+//  JollibeEdu
+//
+//  Created by Tạ Minh Thiện on 23/3/26.
+//
+
 import Foundation
 
 #if canImport(FirebaseCore)

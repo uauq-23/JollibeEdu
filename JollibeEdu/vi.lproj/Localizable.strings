@@ -75,10 +75,10 @@
 "profile.saving" = "Đang lưu...";
 "profile.updated" = "Thông tin hồ sơ đã được cập nhật.";
 "profile.menu.changePassword" = "Đổi mật khẩu";
-"profile.menu.language" = "Ngôn ngữ";
+"profile.menu.language" = "Ngôn ngữ hệ thống";
 "profile.menu.appearance" = "Giao diện";
 "profile.menu.logout" = "Đăng xuất";
-"profile.language.title" = "Chọn ngôn ngữ";
+"profile.language.title" = "Chọn ngôn ngữ hệ thống";
 "profile.language.message" = "Đổi ngôn ngữ hiển thị cho ứng dụng.";
 "profile.appearance.title" = "Chọn giao diện";
 "profile.appearance.message" = "Đổi chế độ sáng hoặc tối cho ứng dụng.";
@@ -219,7 +219,9 @@
 "payment.success.state" = "Thanh toán thành công. Bạn đã được ghi danh khóa học.";
 "payment.success.alert" = "Thanh toán thành công";
 "payment.method.bankCard" = "Thẻ ngân hàng";
-"payment.method.momo" = "Momo QR";
+"payment.method.momo" = "Quét mã QR";
+"payment.qr.instructions.default" = "Mở ví Momo hoặc ứng dụng ngân hàng hỗ trợ QR, quét mã bên trên để thanh toán khóa học.";
+"payment.qr.instructions" = "Mở ví Momo hoặc ứng dụng ngân hàng hỗ trợ QR, quét mã bên trên và chuyển khoản với nội dung: %@.";
 
 "admin.categories.title" = "Quản lý danh mục";
 "admin.categories.metric.total" = "Danh mục";
@@ -286,16 +288,16 @@
 "admin.lessons.fallbackTitle" = "Bài học";
 "admin.lessons.form.add" = "Thêm bài học";
 "admin.lessons.form.edit" = "Chỉnh sửa bài học";
-"admin.lessons.form.message" = "Bạn có thể nhập link ảnh trực tiếp/Drive/Dropbox, hoặc chọn ảnh từ bộ sưu tập. Link video nên là YouTube public, Drive public hoặc direct MP4.";
+"admin.lessons.form.message" = "Bạn có thể chọn ảnh từ bộ sưu tập. Link video nên là YouTube public, Drive public hoặc direct MP4. Với YouTube, thời lượng sẽ tự đồng bộ theo video thật.";
 "admin.lessons.form.title" = "Tiêu đề bài học";
-"admin.lessons.form.thumbnail" = "Ảnh bài học URL";
 "admin.lessons.form.video" = "Video URL";
 "admin.lessons.form.order" = "Thứ tự bài học";
-"admin.lessons.form.duration" = "Thời lượng MM:SS";
+"admin.lessons.form.duration" = "Thời lượng MM:SS hoặc HH:MM:SS";
 "admin.lessons.form.pickImage" = "Ảnh từ bộ sưu tập";
 "admin.lessons.versioned.success" = "Khóa học này đã có học viên hoàn thành, nên app vừa tạo version mới để thêm lesson mà không ảnh hưởng certificate cũ.";
 "admin.lessons.validation.title" = "Tiêu đề bài học không được để trống.";
 "admin.lessons.validation.order" = "Thứ tự bài học phải là số lớn hơn 0.";
+"admin.lessons.validation.duration" = "Thời lượng phải theo định dạng MM:SS hoặc HH:MM:SS.";
 "admin.lessons.delete.title" = "Xóa bài học";
 "admin.lessons.delete.message" = "Xóa bài học %@?";
 "admin.lessons.delete.confirm" = "Xóa";
@@ -332,4 +334,5 @@
 "lesson.detail.youtubeError" = "Mã lỗi YouTube: %@.";
 "lesson.detail.youtubeOpenHint" = "Bạn vẫn có thể mở video bằng ứng dụng YouTube để kiểm tra nội dung.";
 "lesson.detail.openYoutube" = "Mở trong YouTube";
+"video.duration.error.youtube" = "Không thể xác minh thời lượng YouTube lúc này. Vui lòng thử lại với link YouTube public.";
 "lesson.detail.lockedError" = "Lesson này vẫn đang khóa. Hãy hoàn thành bài trước.";

@@ -61,7 +61,7 @@ extension UIViewController {
                 : mode.displayName
             alert.addAction(UIAlertAction(title: title, style: .default) { _ in
                 AppSettingsManager.shared.appearanceMode = mode
-                RootRouter.shared.reloadCurrentRoot(animated: false)
+                RootRouter.shared.updateWindowAppearance(animated: true)
                 onChanged?()
             })
         }
