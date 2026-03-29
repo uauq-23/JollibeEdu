@@ -1,3 +1,10 @@
+//
+//  AdminReportsViewController.swift
+//  JollibeEdu
+//
+//  Created by Tạ Minh Thiện on 23/3/26.
+//
+
 import UIKit
 
 final class AdminReportsViewController: AdminProtectedViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDataSource {
@@ -27,37 +34,11 @@ final class AdminReportsViewController: AdminProtectedViewController, UICollecti
     @IBOutlet private weak var topCoursesCardView: UIView!
     @IBOutlet private weak var topCoursesContainerView: UIView!
     @IBOutlet private weak var topCoursesHeightConstraint: NSLayoutConstraint!
-
-    private let revenueChartView = MonthlyLineChartView()
-    private let userGrowthChartView = ProgressChartView()
-    private let categoryDistributionStack = UIStackView()
-
-    private lazy var summaryCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
-
-    private lazy var topCoursesTableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 150
-        tableView.dataSource = self
-        tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
-        return tableView
-    }()
+    @IBOutlet private weak var summaryCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var revenueChartView: MonthlyLineChartView!
+    @IBOutlet private weak var userGrowthChartView: ProgressChartView!
+    @IBOutlet private weak var categoryDistributionStack: UIStackView!
+    @IBOutlet private weak var topCoursesTableView: IntrinsicTableView!
 
     override func buildContent() {
         title = L10n.tr("admin.reports.title")
@@ -70,15 +51,26 @@ final class AdminReportsViewController: AdminProtectedViewController, UICollecti
         categoryCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
         topCoursesCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
 
-        categoryDistributionStack.translatesAutoresizingMaskIntoConstraints = false
+        if let layout = summaryCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        summaryCollectionView.backgroundColor = .clear
+        summaryCollectionView.isScrollEnabled = false
+        summaryCollectionView.dataSource = self
+        summaryCollectionView.delegate = self
+        summaryCollectionView.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
+
         categoryDistributionStack.axis = .vertical
         categoryDistributionStack.spacing = 12
 
-        embed(summaryCollectionView, in: summaryContainerView)
-        embed(revenueChartView, in: revenueContainerView)
-        embed(userGrowthChartView, in: userGrowthContainerView)
-        embed(categoryDistributionStack, in: categoryContainerView)
-        embed(topCoursesTableView, in: topCoursesContainerView)
+        topCoursesTableView.backgroundColor = .clear
+        topCoursesTableView.separatorStyle = .none
+        topCoursesTableView.isScrollEnabled = false
+        topCoursesTableView.rowHeight = UITableView.automaticDimension
+        topCoursesTableView.estimatedRowHeight = 150
+        topCoursesTableView.dataSource = self
+        topCoursesTableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
 
         Task {
             await loadReports()
@@ -88,20 +80,6 @@ final class AdminReportsViewController: AdminProtectedViewController, UICollecti
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateEmbeddedHeights()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateEmbeddedHeights() {

@@ -1,3 +1,10 @@
+//
+//  AdminUsersViewController.swift
+//  JollibeEdu
+//
+//  Created by Trương Công Hoan on 21/3/26.
+//
+
 import UIKit
 
 final class AdminUsersViewController: AdminProtectedViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate {
@@ -26,39 +33,12 @@ final class AdminUsersViewController: AdminProtectedViewController, UICollection
     @IBOutlet private weak var listCardView: UIView!
     @IBOutlet private weak var listContainerView: UIView!
     @IBOutlet private weak var listHeightConstraint: NSLayoutConstraint!
-
-    private lazy var summaryCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
-
-    private lazy var tableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 150
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
-        return tableView
-    }()
+    @IBOutlet private weak var summaryCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var tableView: IntrinsicTableView!
 
     override func buildContent() {
         title = L10n.tr("admin.users.title")
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addUserTapped))
 
         headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
         summaryCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
@@ -73,8 +53,24 @@ final class AdminUsersViewController: AdminProtectedViewController, UICollection
         roleControl.setTitle(L10n.roleName(for: "admin"), forSegmentAt: 3)
         roleControl.selectedSegmentIndex = 0
         roleControl.addAction(UIAction { [weak self] _ in self?.applyFilters() }, for: .valueChanged)
-        embed(summaryCollectionView, in: summaryContainerView)
-        embed(tableView, in: listContainerView)
+        if let layout = summaryCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        summaryCollectionView.backgroundColor = .clear
+        summaryCollectionView.isScrollEnabled = false
+        summaryCollectionView.dataSource = self
+        summaryCollectionView.delegate = self
+        summaryCollectionView.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
+
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
 
         Task {
             await loadUsers()
@@ -84,20 +80,6 @@ final class AdminUsersViewController: AdminProtectedViewController, UICollection
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateEmbeddedHeights()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateEmbeddedHeights() {
@@ -147,7 +129,7 @@ final class AdminUsersViewController: AdminProtectedViewController, UICollection
         updateEmbeddedHeights()
     }
 
-    @objc private func addUserTapped() {
+    @IBAction private func addUserTapped(_ sender: Any) {
         presentUserForm(user: nil)
     }
 

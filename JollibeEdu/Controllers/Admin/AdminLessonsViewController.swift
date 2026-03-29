@@ -1,4 +1,76 @@
+//
+//  AdminLessonsViewController.swift
+//  JollibeEdu
+//
+//  Created by Tạ Minh Thiện on 23/3/26.
+//
+
 import UIKit
+
+enum VideoDurationResolverError: LocalizedError {
+    case unableToVerifyYouTubeDuration
+
+    var errorDescription: String? {
+        switch self {
+        case .unableToVerifyYouTubeDuration:
+            return L10n.tr("video.duration.error.youtube")
+        }
+    }
+}
+
+enum VideoDurationResolver {
+    private static let session: URLSession = {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 15
+        configuration.timeoutIntervalForResource = 20
+        return URLSession(configuration: configuration)
+    }()
+
+    static func syncedDuration(for rawVideoURL: String?, fallbackDuration: String) async throws -> String {
+        let trimmedDuration = fallbackDuration.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard let rawVideoURL else { return trimmedDuration }
+        let trimmedVideoURL = rawVideoURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedVideoURL.isEmpty else { return trimmedDuration }
+
+        guard let videoID = MediaURLResolver.extractedYouTubeVideoID(from: trimmedVideoURL) else {
+            return trimmedDuration
+        }
+
+        return try await fetchYouTubeDuration(videoID: videoID)
+    }
+
+    static func fetchYouTubeDuration(videoID: String) async throws -> String {
+        guard let url = MediaURLResolver.youtubeWatchURL(for: videoID) else {
+            throw VideoDurationResolverError.unableToVerifyYouTubeDuration
+        }
+
+        var request = URLRequest(url: url)
+        request.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X)", forHTTPHeaderField: "User-Agent")
+        request.setValue("en-US,en;q=0.9", forHTTPHeaderField: "Accept-Language")
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<300).contains(httpResponse.statusCode) else {
+            throw VideoDurationResolverError.unableToVerifyYouTubeDuration
+        }
+
+        let html = String(data: data, encoding: .utf8)
+            ?? String(data: data, encoding: .isoLatin1)
+            ?? ""
+
+        guard let match = html.range(of: #""lengthSeconds":"(\d+)""#, options: .regularExpression) else {
+            throw VideoDurationResolverError.unableToVerifyYouTubeDuration
+        }
+
+        let fragment = String(html[match])
+        guard let seconds = Int(fragment.replacingOccurrences(of: #""lengthSeconds":"([0-9]+)""#, with: "$1", options: .regularExpression)) else {
+            throw VideoDurationResolverError.unableToVerifyYouTubeDuration
+        }
+
+        return AppFormatting.durationString(from: seconds)
+    }
+}
 
 final class AdminLessonsViewController: AdminProtectedViewController, UITableViewDataSource, UITableViewDelegate {
     private struct LessonFormDraft {
@@ -15,34 +87,17 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
     private var lessons: [Lesson] = []
     private let photoLibraryPicker = PhotoLibraryImagePicker()
     override var clearsInitialStoryboardContent: Bool { false }
-    private lazy var addBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addLessonTapped))
-    }()
 
     @IBOutlet private weak var headerCardView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var listCardView: UIView!
     @IBOutlet private weak var listContainerView: UIView!
     @IBOutlet private weak var listHeightConstraint: NSLayoutConstraint!
-
-    private lazy var tableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 150
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
-        return tableView
-    }()
+    @IBOutlet private weak var tableView: IntrinsicTableView!
 
     override func buildContent() {
         title = L10n.tr("admin.lessons.title")
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = addBarButtonItem
 
         headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
         listCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
@@ -51,7 +106,14 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
         titleLabel.textColor = AppTheme.textPrimary
         titleLabel.numberOfLines = 0
 
-        embed(tableView, in: listContainerView)
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
 
         Task {
             await loadLessons()
@@ -61,20 +123,6 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateTableHeight()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateTableHeight() {
@@ -98,7 +146,7 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
         }
     }
 
-    @objc private func addLessonTapped() {
+    @IBAction private func addLessonTapped(_ sender: Any) {
         presentLessonForm(lesson: nil)
     }
 
@@ -112,6 +160,7 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
     }
 
     private func presentLessonForm(lesson: Lesson?, draft: LessonFormDraft? = nil) {
+        let currentThumbnailURL = draft?.thumbnailURL ?? lesson?.thumbnail_url ?? ""
         let alert = UIAlertController(
             title: lesson == nil ? L10n.tr("admin.lessons.form.add") : L10n.tr("admin.lessons.form.edit"),
             message: L10n.tr("admin.lessons.form.message"),
@@ -120,10 +169,6 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
         alert.addTextField {
             $0.placeholder = L10n.tr("admin.lessons.form.title")
             $0.text = draft?.title ?? lesson?.title
-        }
-        alert.addTextField {
-            $0.placeholder = L10n.tr("admin.lessons.form.thumbnail")
-            $0.text = draft?.thumbnailURL ?? lesson?.thumbnail_url
         }
         alert.addTextField {
             $0.placeholder = L10n.tr("admin.lessons.form.video")
@@ -140,26 +185,30 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
         }
         alert.addAction(UIAlertAction(title: L10n.tr("admin.lessons.form.pickImage"), style: .default) { [weak self, weak alert] _ in
             guard let self, let alert else { return }
-            let currentDraft = self.makeLessonDraft(from: alert)
+            let currentDraft = self.makeLessonDraft(from: alert, thumbnailURL: currentThumbnailURL)
             self.pickThumbnailForLesson(lesson: lesson, draft: currentDraft)
         })
         alert.addAction(UIAlertAction(title: L10n.tr("common.cancel"), style: .cancel))
         alert.addAction(UIAlertAction(title: L10n.tr("common.save"), style: .default) { [weak self] _ in
             guard let self, let course = self.course else { return }
-            let formDraft = self.makeLessonDraft(from: alert)
+            let formDraft = self.makeLessonDraft(from: alert, thumbnailURL: currentThumbnailURL)
 
             guard let errorMessage = self.validateLessonForm(formDraft) else {
-                let payload = [
-                    "course_id": course.id,
-                    "title": formDraft.title.trimmingCharacters(in: .whitespacesAndNewlines),
-                    "thumbnail_url": formDraft.thumbnailURL.trimmingCharacters(in: .whitespacesAndNewlines),
-                    "video_url": formDraft.videoURL.trimmingCharacters(in: .whitespacesAndNewlines),
-                    "lesson_order": formDraft.lessonOrder.trimmingCharacters(in: .whitespacesAndNewlines),
-                    "duration": formDraft.duration.trimmingCharacters(in: .whitespacesAndNewlines)
-                ]
-
                 Task { @MainActor in
                     do {
+                        let syncedDuration = try await VideoDurationResolver.syncedDuration(
+                            for: formDraft.videoURL,
+                            fallbackDuration: formDraft.duration
+                        )
+                        let payload = [
+                            "course_id": course.id,
+                            "title": formDraft.title.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "thumbnail_url": formDraft.thumbnailURL.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "video_url": formDraft.videoURL.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "lesson_order": formDraft.lessonOrder.trimmingCharacters(in: .whitespacesAndNewlines),
+                            "duration": syncedDuration
+                        ]
+
                         if let lesson {
                             _ = try await LessonService.shared.update(id: lesson.id, data: payload)
                         } else {
@@ -187,13 +236,13 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
         present(alert, animated: true)
     }
 
-    private func makeLessonDraft(from alert: UIAlertController) -> LessonFormDraft {
+    private func makeLessonDraft(from alert: UIAlertController, thumbnailURL: String) -> LessonFormDraft {
         LessonFormDraft(
             title: alert.textFields?[0].text ?? "",
-            thumbnailURL: alert.textFields?[1].text ?? "",
-            videoURL: alert.textFields?[2].text ?? "",
-            lessonOrder: alert.textFields?[3].text ?? "1",
-            duration: alert.textFields?[4].text ?? "00:00"
+            thumbnailURL: thumbnailURL,
+            videoURL: alert.textFields?[1].text ?? "",
+            lessonOrder: alert.textFields?[2].text ?? "1",
+            duration: alert.textFields?[3].text ?? "00:00"
         )
     }
 
@@ -225,6 +274,9 @@ final class AdminLessonsViewController: AdminProtectedViewController, UITableVie
         }
         guard let order = Int(draft.lessonOrder.trimmingCharacters(in: .whitespacesAndNewlines)), order > 0 else {
             return L10n.tr("admin.lessons.validation.order")
+        }
+        guard AppFormatting.seconds(fromDurationString: draft.duration) != nil else {
+            return L10n.tr("admin.lessons.validation.duration")
         }
         return nil
     }

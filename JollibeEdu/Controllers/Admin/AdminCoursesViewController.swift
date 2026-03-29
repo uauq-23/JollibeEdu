@@ -1,3 +1,10 @@
+//
+//  AdminCoursesViewController.swift
+//  JollibeEdu
+//
+//  Created by Trương Công Hoan on 21/3/26.
+//
+
 import UIKit
 
 final class AdminCoursesViewController: AdminProtectedViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate {
@@ -27,24 +34,29 @@ final class AdminCoursesViewController: AdminProtectedViewController, UICollecti
     @IBOutlet private weak var listCardView: UIView!
     @IBOutlet private weak var listContainerView: UIView!
     @IBOutlet private weak var listHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var summaryCollectionView: IntrinsicCollectionView!
+    @IBOutlet private weak var tableView: IntrinsicTableView!
 
-    private lazy var summaryCollectionView: IntrinsicCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 14
-        let view = IntrinsicCollectionView(frame: .zero, collectionViewLayout: layout)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.isScrollEnabled = false
-        view.dataSource = self
-        view.delegate = self
-        view.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
-        return view
-    }()
+    override func buildContent() {
+        title = L10n.tr("admin.courses.title")
+        navigationItem.largeTitleDisplayMode = .never
 
-    private lazy var tableView: IntrinsicTableView = {
-        let tableView = IntrinsicTableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
+        summaryCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
+        listCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
+
+        searchField.applyAppStyle(placeholder: L10n.tr("admin.courses.search.placeholder"))
+        searchField.addTarget(self, action: #selector(searchChanged), for: .editingChanged)
+        if let layout = summaryCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumLineSpacing = 14
+            layout.minimumInteritemSpacing = 14
+        }
+        summaryCollectionView.backgroundColor = .clear
+        summaryCollectionView.isScrollEnabled = false
+        summaryCollectionView.dataSource = self
+        summaryCollectionView.delegate = self
+        summaryCollectionView.register(AdminSummaryCardCollectionViewCell.self, forCellWithReuseIdentifier: AdminSummaryCardCollectionViewCell.reuseIdentifier)
+
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
@@ -53,22 +65,6 @@ final class AdminCoursesViewController: AdminProtectedViewController, UICollecti
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AdminListTableViewCell.self, forCellReuseIdentifier: AdminListTableViewCell.reuseIdentifier)
-        return tableView
-    }()
-
-    override func buildContent() {
-        title = L10n.tr("admin.courses.title")
-        navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCourseTapped))
-
-        headerCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
-        summaryCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
-        listCardView.applyCardStyle(backgroundColor: AppTheme.cardBackground)
-
-        searchField.applyAppStyle(placeholder: L10n.tr("admin.courses.search.placeholder"))
-        searchField.addTarget(self, action: #selector(searchChanged), for: .editingChanged)
-        embed(summaryCollectionView, in: summaryContainerView)
-        embed(tableView, in: listContainerView)
 
         Task {
             await loadCourses()
@@ -78,20 +74,6 @@ final class AdminCoursesViewController: AdminProtectedViewController, UICollecti
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateEmbeddedHeights()
-    }
-
-    private func embed(_ view: UIView, in container: UIView) {
-        guard view.superview !== container else { return }
-        view.removeFromSuperview()
-        container.subviews.forEach { $0.removeFromSuperview() }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(view)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: container.topAnchor),
-            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ])
     }
 
     private func updateEmbeddedHeights() {
@@ -137,7 +119,7 @@ final class AdminCoursesViewController: AdminProtectedViewController, UICollecti
         updateEmbeddedHeights()
     }
 
-    @objc private func addCourseTapped() {
+    @IBAction private func addCourseTapped(_ sender: Any) {
         presentCourseForm(course: nil)
     }
 
