@@ -75,10 +75,10 @@
 "profile.saving" = "Saving...";
 "profile.updated" = "Profile information has been updated.";
 "profile.menu.changePassword" = "Change password";
-"profile.menu.language" = "Language";
+"profile.menu.language" = "System language";
 "profile.menu.appearance" = "Appearance";
 "profile.menu.logout" = "Log out";
-"profile.language.title" = "Choose language";
+"profile.language.title" = "Choose system language";
 "profile.language.message" = "Update the display language for the app.";
 "profile.appearance.title" = "Choose appearance";
 "profile.appearance.message" = "Switch the app between light and dark mode.";
@@ -219,7 +219,9 @@
 "payment.success.state" = "Payment successful. You are now enrolled in the course.";
 "payment.success.alert" = "Payment successful";
 "payment.method.bankCard" = "Bank Card";
-"payment.method.momo" = "Momo QR";
+"payment.method.momo" = "Scan QR";
+"payment.qr.instructions.default" = "Open Momo or a banking app that supports QR payments, then scan the code above to pay for the course.";
+"payment.qr.instructions" = "Open Momo or a banking app that supports QR payments, scan the code above, then transfer with the content: %@.";
 
 "admin.categories.title" = "Category Management";
 "admin.categories.metric.total" = "Categories";
@@ -286,16 +288,16 @@
 "admin.lessons.fallbackTitle" = "Lessons";
 "admin.lessons.form.add" = "Add lesson";
 "admin.lessons.form.edit" = "Edit lesson";
-"admin.lessons.form.message" = "Use a public image/Drive/Dropbox link, or pick an image from the photo library. Video should be public YouTube, public Drive, or direct MP4.";
+"admin.lessons.form.message" = "Pick an image from the photo library if needed. Video should be public YouTube, public Drive, or direct MP4. For YouTube links, the lesson duration will sync to the real video length.";
 "admin.lessons.form.title" = "Lesson title";
-"admin.lessons.form.thumbnail" = "Lesson image URL";
 "admin.lessons.form.video" = "Video URL";
 "admin.lessons.form.order" = "Lesson order";
-"admin.lessons.form.duration" = "Duration MM:SS";
+"admin.lessons.form.duration" = "Duration MM:SS or HH:MM:SS";
 "admin.lessons.form.pickImage" = "Image from library";
 "admin.lessons.versioned.success" = "This course already has students who finished it, so the app created a new version before adding the lesson to protect old certificates.";
 "admin.lessons.validation.title" = "Lesson title cannot be empty.";
 "admin.lessons.validation.order" = "Lesson order must be a number greater than 0.";
+"admin.lessons.validation.duration" = "Duration must use the MM:SS or HH:MM:SS format.";
 "admin.lessons.delete.title" = "Delete lesson";
 "admin.lessons.delete.message" = "Delete lesson %@?";
 "admin.lessons.delete.confirm" = "Delete";
@@ -332,4 +334,5 @@
 "lesson.detail.youtubeError" = "YouTube error code: %@.";
 "lesson.detail.youtubeOpenHint" = "You can still open the video in the YouTube app to review it.";
 "lesson.detail.openYoutube" = "Open in YouTube";
+"video.duration.error.youtube" = "Unable to verify the YouTube duration right now. Please try again with a public YouTube link.";
 "lesson.detail.lockedError" = "This lesson is still locked. Please complete the previous lesson first.";

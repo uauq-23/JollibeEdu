@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  JollibeEdu
 //
-//  Created by Nguyễn Thuỳ Dung on 20/3/26.
+//  Created by Lê Nguyễn Quốc Toàn on 20/3/26.
 //
 
 import UIKit

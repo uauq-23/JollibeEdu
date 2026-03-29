@@ -44,6 +44,17 @@ enum AppAppearanceMode: String, CaseIterable {
             return L10n.tr("profile.appearance.dark")
         }
     }
+
+    func isDarkActive(for traits: UITraitCollection) -> Bool {
+        switch self {
+        case .system:
+            return traits.userInterfaceStyle == .dark
+        case .light:
+            return false
+        case .dark:
+            return true
+        }
+    }
 }
 
 final class AppSettingsManager {

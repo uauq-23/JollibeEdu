@@ -1,3 +1,10 @@
+//
+//  RootRouter.swift
+//  JollibeEdu
+//
+//  Created by Lê Nguyễn Quốc Toàn on 20/3/26.
+//
+
 import UIKit
 
 final class RootRouter {
@@ -91,6 +98,22 @@ final class RootRouter {
         configureInitialRoot()
         if animated, let window {
             UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil, completion: nil)
+        }
+    }
+
+    func updateWindowAppearance(animated: Bool) {
+        guard let window else { return }
+
+        let applyChanges = {
+            AppTheme.applyWindowAppearance(to: window)
+            window.rootViewController?.view.setNeedsLayout()
+            window.rootViewController?.view.layoutIfNeeded()
+        }
+
+        if animated {
+            UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve, animations: applyChanges, completion: nil)
+        } else {
+            applyChanges()
         }
     }
 }
